@@ -1,3 +1,5 @@
+import { getContext } from "@ctx";
+
 export default async (_options: {
   params: {};
   query: {
@@ -5,6 +7,12 @@ export default async (_options: {
     offset: 20;
   };
   body: {};
-}) => ({
-  data: 42,
-});
+}) => {
+  const ctx = getContext();
+
+  // In ctx gibt es session cookie user_id etc. die aber NICHT die definition dieser funktion "verschmutzen" sollen
+
+  return {
+    data: 42,
+  };
+};

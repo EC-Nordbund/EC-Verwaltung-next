@@ -47,6 +47,7 @@ export default defineConfig({
     alias: {
       // "@api": resolve(__dirname, "api/routes"),
       "@": resolve(__dirname, "verwaltung"),
+      "@ctx": resolve(__dirname, "api/ctx.ts"),
     },
   },
 });
