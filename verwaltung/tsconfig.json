@@ -5,12 +5,13 @@
     "useDefineForClassFields": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "isolatedModules": true,
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noEmit": true,
+    "skipLibCheck": true,
     "lib": [
       "esnext",
       "dom"

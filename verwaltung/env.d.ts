@@ -7,3 +7,7 @@ declare module "*.vue" {
   const component: DefineComponent<{}, {}, any>;
   export default component;
 }
+
+declare module "@ctx" {
+  export const getContext: () => any;
+}

@@ -11,6 +11,11 @@
     "url": "https://www.ec-nordbund.de",
     "email": "app@ec-nordbund.de"
   },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "types": "vue-tsc -p ./verwaltung/tsconfig.json"
+  },
   "license": "GPL3",
   "bugs": {
     "url": "https://github.com/EC-Nordbund/EC-Verwaltung-next/issues"
