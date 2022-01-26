@@ -37,8 +37,11 @@ export default defineConfig({
         verwaltung: resolve(__dirname, "verwaltung/index.html"),
         server: resolve(__dirname, "api/mod.ts"),
       },
+      output: {
+        manualChunks: undefined,
+      },
     },
-    minify: false,
+    // minify: false,
   },
   resolve: {
     alias: {

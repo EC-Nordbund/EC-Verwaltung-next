@@ -1,5 +1,27 @@
-import a from "@api/test.post";
+import { createApp } from "vue";
+import App from "./App.vue";
 
-console.log("Hi from vite");
+import { createVuetify } from "vuetify";
+import { mdi, aliases } from "vuetify/lib/iconsets/mdi-svg";
 
-console.log(a(52));
+import routes from "~pages";
+import { createRouter, createWebHashHistory } from "vue-router";
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+});
+
+const vuetify = createVuetify({
+  icons: {
+    defaultSet: "mdi",
+    aliases,
+    sets: {
+      mdi,
+    },
+  },
+});
+
+const app = createApp(App).use(vuetify).use(router);
+
+app.mount("#app");
