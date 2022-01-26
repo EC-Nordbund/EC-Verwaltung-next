@@ -10,6 +10,8 @@ export default async (_options: {
 }) => {
   const ctx = getContext();
 
+  ctx.auth(['admin', 'usera'])
+
   // In ctx gibt es session cookie user_id etc. die aber NICHT die definition dieser funktion "verschmutzen" sollen
 
   return {

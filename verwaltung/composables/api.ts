@@ -32,6 +32,8 @@ let currentSource: EventSource | null = null;
 export function createNewEventSource() {
   if (currentSource) {
     currentSource.close();
+    // Allow GC to collect EventSource
+    currentSource = null;
   }
 
   if (!authToken.value) return;
