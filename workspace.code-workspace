@@ -22,7 +22,8 @@
 			"lukas-tr.materialdesignicons-intellisense",
 			"johnsoncodehk.volar",
 			"esbenp.prettier-vscode",
-			"syler.sass-indented"
+			"syler.sass-indented",
+			"denoland.vscode-deno"
 		]
 	}
 }
