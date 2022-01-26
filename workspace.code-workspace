@@ -10,8 +10,9 @@
 		}
 	],
 	"settings": {
-		"deno.lint": true,
-		"deno.unstable": true
+		// "deno.lint": false,
+		"deno.unstable": true,
+		"deno.enable": false
 	},
 	"extensions": {
 		"unwantedRecommendations": [

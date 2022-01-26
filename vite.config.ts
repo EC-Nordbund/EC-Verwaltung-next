@@ -10,6 +10,7 @@ import Components from "unplugin-vue-components/vite";
 import { vuetifyResolver } from "./vite-plugins/vuetify-resolver";
 
 import serverCreator from "./vite-plugins/server-router";
+import serverCreator2 from "./vite-plugins/server-router2";
 import server from "vite-plugin-server";
 
 export default defineConfig({
@@ -30,6 +31,7 @@ export default defineConfig({
     }),
     mdiIcons(),
     server(),
+    serverCreator2(),
   ],
   build: {
     rollupOptions: {
@@ -41,7 +43,7 @@ export default defineConfig({
         manualChunks: undefined,
       },
     },
-    // minify: false,
+    minify: false,
   },
   resolve: {
     alias: {

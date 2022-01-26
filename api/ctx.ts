@@ -1,11 +1,11 @@
-import { handleMysql } from "./deps/mysql.ts";
-import { RouterContext } from "https://deno.land/x/oak@v10.1.0/mod.ts";
+import { handleMysql } from "./mysql.ts";
+import { RouterContext, oakHelpers } from "./deps.ts";
 
 const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 
 let currentContext: ReturnType<typeof createContext> | null;
 
-export function createContext(ctx: RouterContext<any>) {
+function createContext(ctx: RouterContext<any>) {
   const [query, mysql_release] = handleMysql();
 
   map.set(ctx, [mysql_release]);
@@ -19,7 +19,7 @@ export function createContext(ctx: RouterContext<any>) {
   };
 }
 
-export function resetContext() {
+function resetContext() {
   currentContext = null;
 }
 
@@ -28,8 +28,30 @@ export function getContext() {
   return currentContext;
 }
 
-export function releaseContext(ctx: RouterContext<any>) {
+function releaseContext(ctx: RouterContext<any>) {
   if (map.has(ctx)) {
     map.get(ctx)!.forEach((cb) => cb());
   }
+}
+
+export function wrapper(
+  cb: (args: { params: any; query: any; body: any }) => Promise<any>
+) {
+  return async (ctx: RouterContext<any>) => {
+    createContext(ctx);
+    const pData = cb({
+      params: ctx.params,
+      query: oakHelpers.getQuery(ctx),
+      body: await ctx.request.body({ type: "json" }).value,
+    });
+    resetContext();
+
+    const data = await pData;
+
+    ctx.response.headers.set("content-type", "application/json");
+    ctx.response.status = 200;
+    ctx.response.body = JSON.stringify(data);
+
+    releaseContext(ctx);
+  };
 }

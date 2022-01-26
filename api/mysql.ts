@@ -1,10 +1,6 @@
-import {
-  Client,
-  Connection,
-  ExecuteResult,
-} from "https://deno.land/x/mysql@v2.10.2/mod.ts";
+import { Connection, ExecuteResult, SQLClient } from "./deps.ts";
 
-export const client = new Client();
+export const client = new SQLClient();
 
 // client.connect()
 
@@ -19,7 +15,7 @@ export function handleMysql(): [
 
   let finalPromiseReturn: any = {};
 
-  let query = async (sql: string, params?: any[]) => {
+  const query = async (sql: string, params?: any[]) => {
     if (first) {
       first = false;
 
