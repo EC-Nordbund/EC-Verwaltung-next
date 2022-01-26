@@ -9,5 +9,20 @@
 			"path": "verwaltung"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"deno.enable": false,
+		"deno.lint": true,
+		"deno.unstable": true
+	},
+	"extensions": {
+		"unwantedRecommendations": [
+			"octref.vetur"
+		],
+		"recommendations": [
+			"lukas-tr.materialdesignicons-intellisense",
+			"johnsoncodehk.volar",
+			"esbenp.prettier-vscode",
+			"syler.sass-indented"
+		]
+	}
 }
