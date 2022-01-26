@@ -8,6 +8,6 @@ declare module "*.vue" {
   export default component;
 }
 
-declare module "@ctx" {
+declare module "*?ctx" {
   export const getContext: () => any;
 }

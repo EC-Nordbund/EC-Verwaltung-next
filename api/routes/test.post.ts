@@ -1,4 +1,4 @@
-import { getContext } from "@ctx";
+import { getContext } from "../ctx.ts?ctx";
 
 export default async (_options: {
   params: {};
@@ -10,7 +10,7 @@ export default async (_options: {
 }) => {
   const ctx = getContext();
 
-  ctx.auth(['admin', 'usera'])
+  // ctx.auth(["admin", "usera"]);
 
   // In ctx gibt es session cookie user_id etc. die aber NICHT die definition dieser funktion "verschmutzen" sollen
 

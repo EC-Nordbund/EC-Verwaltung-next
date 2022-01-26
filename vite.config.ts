@@ -48,6 +48,7 @@ export default defineConfig({
       // "@api": resolve(__dirname, "api/routes"),
       "@": resolve(__dirname, "verwaltung"),
       "@ctx": resolve(__dirname, "api/ctx.ts"),
+      "@deps": resolve(__dirname, "api/deps"),
     },
   },
 });
