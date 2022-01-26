@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@mdi/js": "^6.5.95",
+    "@vueuse/core": "^7.5.5",
     "vue": "^3.2.29",
     "vue-router": "^4.0.12",
     "vuetify": "npm:@vuetify/nightly@^3.0.0-next-20220126.0"

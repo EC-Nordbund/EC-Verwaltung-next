@@ -4,13 +4,11 @@ export default ({ baseUrl = "http://localhost:8080" } = {}) => {
   return {
     name: "server-router",
     resolveId(id) {
-      if (id === "@headers") return id;
       if (!id.startsWith("@api")) return;
 
       return id;
     },
     load(id) {
-      if (id === "@headers") return `export const headers = v => ({})`;
       if (!id.startsWith("@api")) return;
 
       const path = id.slice(4);
@@ -24,23 +22,20 @@ export default ({ baseUrl = "http://localhost:8080" } = {}) => {
         .join("/");
 
       return `
-        import { headers } from '@headers'
+        import { wrapFetchOptions, baseUrl } from '@/composables/api'
 
         export default ({ params, query, body }) => {
           const url = new URL(\`${pathLit}\`, ${JSON.stringify(baseUrl)})
           const s = new URLSearchParams(query)
           url.search = s.toString()
 
-          return fetch(url.href, {
+          return fetch(url.href, wrapFetchOptions({
             method: '${METHOD}',
             headers: {
-              'content-type': 'application/json',
-              ...headers({
-                url
-              })
+              'content-type': 'application/json'
             },
             body: JSON.stringify(body)
-          }).then(res => res.json())
+          })).then(res => res.json())
         }
       `;
     },
