@@ -1,5 +1,5 @@
-import a from "@api/test";
+import a from "@api/test.post";
 
 console.log("Hi from vite");
 
-a(52);
+console.log(a(52));
