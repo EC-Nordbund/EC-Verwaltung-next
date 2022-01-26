@@ -8,7 +8,7 @@ specifiers:
   vite: ^2.7.13
   vite-plugin-inspect: ^0.3.13
   vite-plugin-pages: ^0.20.0
-  vite-plugin-server: ^0.1.1
+  vite-plugin-server: ^0.1.2
   vue: ^3.2.29
   vue-router: ^4.0.12
   vue-tsc: ^0.31.1
@@ -27,7 +27,7 @@ devDependencies:
   vite: 2.7.13
   vite-plugin-inspect: 0.3.13_vite@2.7.13
   vite-plugin-pages: 0.20.0_vite@2.7.13
-  vite-plugin-server: 0.1.1_typescript@4.5.5
+  vite-plugin-server: 0.1.2_typescript@4.5.5
   vue-tsc: 0.31.1_typescript@4.5.5
 
 packages:
@@ -1920,8 +1920,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-server/0.1.1_typescript@4.5.5:
-    resolution: {integrity: sha512-Tewhv/9Pm7zxffkYPxrcQowr/jbrzqb6KSn+kGm8jIkwECJee1LjyX+RsU4ULwj+UQYbDdXpwiUfO1kQVmNhTQ==}
+  /vite-plugin-server/0.1.2_typescript@4.5.5:
+    resolution: {integrity: sha512-iZsRgoOrSUZ2UGupUvJCN1668UQWExwrVbjvGJADLXTuRZYR1zV4Ava0p/ylRnPoWO/A10Gxs7F1YDDOioAMOQ==}
     dependencies:
       node-fetch: 3.2.0
       tsup: 5.11.11_typescript@4.5.5
