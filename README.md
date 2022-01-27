@@ -3,6 +3,7 @@
 ## Features
 1. API mit automatischen* routes.
 2. API mit Framework unabhänigen Funktionen.
+2. onInvalidate Hook
 3. Vuetify mit Component Types und Treeshaking in dev + production!
 4. Automatische Route detection mit vite-plugin-pages
 5. Plugin inspection mit vite-plugin-inspect
@@ -22,3 +23,16 @@ In api/routes muss wenn getContext importiert wird immer noch ein `?ctx` angehä
 
 ## API in Verwaltung
 Um eine API funktion in der Verwaltung zu importieren nutze den `@api/...` prefix. Dieser wird entsprechend von typescript aufgelöst um die richtigen typen zu haben aber genauso von vite abgefangen sodass die Datei nicht tatsächlich importiert wird.
+
+## TODO (bevor es richtig losgehen kann)
+
+### API
+1. Auth
+#### Folgende Deno kompatible Packte / Bibliotheken
+1. JWT
+2. XLSX Templates
+3. Mailer (gibt SMTP clients die tw. nicht alles können)
+##### Optional
+1. web push
+### Verwaltung
+1. Auth

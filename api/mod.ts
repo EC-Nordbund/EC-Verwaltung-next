@@ -6,7 +6,9 @@ import {
   ServerSentEvent,
 } from "oak";
 
-import "./docx-worker.ts";
+import { docxWorker } from "./worker.ts";
+
+// console.log(docxWorker());
 
 import fillRouter from "./.routes.ts";
 
@@ -29,11 +31,12 @@ baseRouter.get("/_sse", (ctx) => {
 
   targets.push(target);
 
-  setTimeout(() => {
+  let to = setTimeout(() => {
     target.close();
   }, 1000 * 60 * 60); // max 1 Stunde alive!
 
   target.addEventListener("close", () => {
+    clearTimeout(to);
     targets.splice(targets.indexOf(target), 1);
   });
 });
@@ -41,7 +44,7 @@ baseRouter.get("/_sse", (ctx) => {
 baseRouter.get("/", (ctx) => {
   ctx.response.body = "Hello World!";
 });
-
+,
 fillRouter(baseRouter);
 
 app.use(baseRouter.routes());
@@ -57,3 +60,7 @@ export function sendData(ev: ServerSentEvent) {
 
 console.log(import.meta.url);
 // console.log("test");
+
+for (let i = 0; i < 100; i++) {
+  docxWorker();
+}
