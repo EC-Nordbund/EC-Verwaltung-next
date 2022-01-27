@@ -1,8 +1,19 @@
-import { Connection, ExecuteResult, SQLClient } from "./deps.ts";
+import { Connection, ExecuteResult, Client } from "mysql";
 
-export const client = new SQLClient();
+export let client: Client;
 
-// client.connect()
+export async function getClient() {
+  if (!client) {
+    client = new Client();
+    await client.connect({
+      charset: "utf-8",
+      poolSize: 10,
+      // TODO: full options
+    });
+  }
+
+  return client;
+}
 
 type Result<T = unknown> = ExecuteResult | T[];
 
@@ -20,8 +31,8 @@ export function handleMysql(): [
       first = false;
 
       return new Promise((resolve, reject) => {
-        con = new Promise((resolve2, reject2) => {
-          client.useConnection(
+        con = new Promise(async (resolve2, reject2) => {
+          (await getClient()).useConnection(
             (newConnection) =>
               new Promise((res, rej) => {
                 finalPromiseReturn = { res, rej };

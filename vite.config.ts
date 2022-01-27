@@ -10,12 +10,13 @@ import Components from "unplugin-vue-components/vite";
 import { vuetifyResolver } from "./vite-plugins/vuetify-resolver";
 
 import serverCreator from "./vite-plugins/server-router";
-import serverCreator2 from "./vite-plugins/server-router2";
-import server from "vite-plugin-server";
 
 export default defineConfig({
   server: {
     open: "/verwaltung/index.html",
+  },
+  define: {
+    __API_BASE_URL__: JSON.stringify("http://localhost:8080"),
   },
   plugins: [
     serverCreator(),
@@ -30,27 +31,22 @@ export default defineConfig({
       resolvers: [vuetifyResolver()],
     }),
     mdiIcons(),
-    server(),
-    serverCreator2(),
   ],
   build: {
     rollupOptions: {
       input: {
-        verwaltung: resolve(__dirname, "verwaltung/index.html"),
-        server: resolve(__dirname, "api/mod.ts"),
+        index: resolve(__dirname, "verwaltung/index.html"),
       },
       output: {
         manualChunks: undefined,
+        entryFileNames: "index.js",
       },
     },
     minify: false,
   },
   resolve: {
     alias: {
-      // "@api": resolve(__dirname, "api/routes"),
       "@": resolve(__dirname, "verwaltung"),
-      "@ctx": resolve(__dirname, "api/ctx.ts"),
-      "@deps": resolve(__dirname, "api/deps"),
     },
   },
 });

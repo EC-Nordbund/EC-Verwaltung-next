@@ -11,3 +11,5 @@ declare module "*.vue" {
 declare module "*?ctx" {
   export const getContext: () => any;
 }
+
+declare const __API_BASE_URL__: string

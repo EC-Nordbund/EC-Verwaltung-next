@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "mysql": "https://deno.land/x/mysql@v2.10.2/mod.ts",
+    "oak": "https://deno.land/x/oak@v10.1.0/mod.ts",
+    "docx-templates": "./deps/docx-templates.ts",
+    "comlink": "./deps/comlink.ts",
+    "https://unpkg.com/comlink@4.3.1/dist/esm/protocol": "https://unpkg.com/comlink@4.3.1/dist/esm/protocol.d.ts"
+  }
+}

@@ -1,6 +1,6 @@
 import { Plugin } from "vite";
 
-export default ({ baseUrl = "http://localhost:8080" } = {}) => {
+export default () => {
   return {
     name: "server-router",
     resolveId(id) {
@@ -21,13 +21,14 @@ export default ({ baseUrl = "http://localhost:8080" } = {}) => {
         .map((part) => (part[0] === "_" ? "params." + part.slice(1) : part))
         .join("/");
 
-      return `
-        import { wrapFetchOptions, baseUrl } from '@/composables/api'
+      const code = `
+        import { wrapFetchOptions } from '@/composables/api'
 
         export default ({ params, query, body }) => {
-          const url = new URL(\`${pathLit}\`, ${JSON.stringify(baseUrl)})
+          const url = new URL(\`${pathLit}\`, __API_BASE_URL__)
+
           const s = new URLSearchParams(query)
-          url.search = s.toString()
+            url.search = s.toString()
 
           return fetch(url.href, wrapFetchOptions({
             method: '${METHOD}',
@@ -38,6 +39,10 @@ export default ({ baseUrl = "http://localhost:8080" } = {}) => {
           })).then(res => res.json())
         }
       `;
+
+      console.log(code);
+
+      return code;
     },
   } as Plugin;
 };

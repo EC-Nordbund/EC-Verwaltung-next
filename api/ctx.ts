@@ -1,5 +1,5 @@
 import { handleMysql } from "./mysql.ts";
-import { RouterContext, oakHelpers } from "./deps.ts";
+import { RouterContext, helpers } from "oak";
 
 const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 
@@ -41,8 +41,8 @@ export function wrapper(
     createContext(ctx);
     const pData = cb({
       params: ctx.params,
-      query: oakHelpers.getQuery(ctx),
-      body: await ctx.request.body({ type: "json" }).value,
+      query: helpers.getQuery(ctx),
+      body: await ctx.request.body({ type: "json" }).value.catch((v) => ({})),
     });
     resetContext();
 

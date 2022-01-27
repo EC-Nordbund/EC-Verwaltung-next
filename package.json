@@ -14,7 +14,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "types": "vue-tsc -p ./verwaltung/tsconfig.json"
+    "types": "vue-tsc -p ./verwaltung/tsconfig.json",
+    "routes": "node createRoutes.mjs"
   },
   "license": "GPL3",
   "bugs": {
