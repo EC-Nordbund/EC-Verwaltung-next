@@ -22,7 +22,7 @@ const files = getAllFiles("api/routes")
 let imports = "";
 let calls = "";
 
-let code = `import { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n`;
+let code = `/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n`;
 
 files.forEach((file, i) => {
   const [p, method] = file.split(".");

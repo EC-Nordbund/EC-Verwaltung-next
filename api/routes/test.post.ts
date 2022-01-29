@@ -1,4 +1,4 @@
-import { getContext } from "../ctx.ts?ctx";
+import { getContext } from "@ctx";
 
 export default async (_options: {
   params: {};

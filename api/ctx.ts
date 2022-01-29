@@ -1,6 +1,8 @@
 import { handleMysql } from "./mysql.ts";
 import { RouterContext, helpers } from "oak";
 
+import { docxWorker, tnFileWorker, zuschuesseWorker } from "./worker.ts";
+
 const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 
 let currentContext: ReturnType<typeof createContext> | null;
@@ -10,13 +12,18 @@ function createContext(ctx: RouterContext<any>) {
 
   map.set(ctx, [mysql_release]);
 
-  currentContext = {
+  const ecCtx = {
     query,
+    worker: {
+      docx: docxWorker,
+      tnFile: tnFileWorker,
+      zuschuesse: zuschuesseWorker,
+    },
   };
 
-  return {
-    query,
-  };
+  currentContext = ecCtx;
+
+  return ecCtx;
 }
 
 function resetContext() {

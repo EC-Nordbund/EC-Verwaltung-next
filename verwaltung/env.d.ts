@@ -8,8 +8,8 @@ declare module "*.vue" {
   export default component;
 }
 
-declare module "*?ctx" {
+declare module "@ctx" {
   export const getContext: () => any;
 }
 
-declare const __API_BASE_URL__: string
+declare const __API_BASE_URL__: string;

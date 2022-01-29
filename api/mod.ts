@@ -6,8 +6,6 @@ import {
   ServerSentEvent,
 } from "oak";
 
-import { docxWorker } from "./worker.ts";
-
 // console.log(docxWorker());
 
 import fillRouter from "./.routes.ts";
@@ -44,23 +42,16 @@ baseRouter.get("/_sse", (ctx) => {
 baseRouter.get("/", (ctx) => {
   ctx.response.body = "Hello World!";
 });
-,
+
 fillRouter(baseRouter);
 
 app.use(baseRouter.routes());
 app.use(baseRouter.allowedMethods());
 
-app.listen({ port: 8080 }).then(() => {
-  console.log("Server running in Port 8080!");
-});
+app.listen({ port: 8080 });
+
+console.log("Server running in Port 8080!");
 
 export function sendData(ev: ServerSentEvent) {
   targets.forEach((t) => t.dispatchEvent(ev));
-}
-
-console.log(import.meta.url);
-// console.log("test");
-
-for (let i = 0; i < 100; i++) {
-  docxWorker();
 }
