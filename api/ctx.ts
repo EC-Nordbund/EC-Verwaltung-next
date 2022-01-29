@@ -3,6 +3,8 @@ import { RouterContext, helpers } from "oak";
 
 import { docxWorker, tnFileWorker, zuschuesseWorker } from "./worker.ts";
 
+import * as gotenberg from "gotenberg";
+
 const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 
 let currentContext: ReturnType<typeof createContext> | null;
@@ -14,6 +16,7 @@ function createContext(ctx: RouterContext<any>) {
 
   const ecCtx = {
     query,
+    gotenberg,
     worker: {
       docx: docxWorker,
       tnFile: tnFileWorker,

@@ -10,6 +10,7 @@
     "gotenberg": "https://deno.land/x/gotenberg@0.3.1/mod.ts",
     "jose": "https://deno.land/x/jose@v4.4.0/index.ts",
     "xlsx": "https://raw.githubusercontent.com/EC-Nordbund/deno-xlsx-template/8d47fff25897da3eb8e12e29a301ee8f9b63c315/mod.ts",
-    "@ctx": "./ctx.ts"
+    "@ctx": "./ctx.ts",
+    "denomailer": "https://deno.land/x/denomailer@0.8.0/mod.ts"
   }
 }

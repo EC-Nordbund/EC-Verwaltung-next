@@ -30,8 +30,8 @@ Um eine API funktion in der Verwaltung zu importieren nutze den `@api/...` prefi
 1. Auth
 #### Folgende Deno kompatible Packte / Bibliotheken
 1. JWT - DONE
-2. XLSX Templates
-3. Mailer (gibt SMTP clients die tw. nicht alles können)
+2. XLSX Templates - DONE
+3. Mailer (gibt SMTP clients die tw. nicht alles können) ! - DONE muss noch in worker implementiert werden!
 4. Gotenberg (ist simpel da schreiben wir was eigenes!) - DONE
 ##### Optional
 1. web push
