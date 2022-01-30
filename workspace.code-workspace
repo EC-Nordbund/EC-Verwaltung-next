@@ -17,7 +17,7 @@
 		"deno.lint": false,
 		"deno.unstable": true,
 		"deno.enable": true,
-		"deno.importMap": "./api/importmap.json",
+		"deno.importMap": "./api/importmap.json"
 	},
 	"extensions": {
 		"unwantedRecommendations": [
