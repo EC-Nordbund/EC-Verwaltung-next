@@ -79,7 +79,7 @@ export function wrapper(
     const pData = cb({
       params: ctx.params,
       query: helpers.getQuery(ctx),
-      body: await ctx.request.body({ type: "json" }).value.catch((v) => ({})),
+      body: await ctx.request.body({ type: "json" }).value.catch(() => ({})),
     });
     resetContext();
 

@@ -9,6 +9,27 @@
 			"path": "api"
 		}
 	],
+	"launch": {
+		"configurations": [
+			{
+				"request": "launch",
+				"name": "deno",
+				"type": "pwa-node",
+				"program": "./api/mod.ts",
+				"cwd": "${workspaceFolder}",
+				"runtimeExecutable": "deno",
+				"runtimeArgs": [
+					"run",
+					"--inspect-brk",
+					"-A",
+					"--unstable",
+					"--no-check=remote",
+					"--importmap=api/importmap.json"
+				],
+				"attachSimplePort": 9229
+			}
+		]
+	},
 	"settings": {
 		"deno.lint": true,
 		"deno.unstable": true,

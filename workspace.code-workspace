@@ -13,11 +13,61 @@
 			"path": "verwaltung"
 		}
 	],
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Vite",
+				"type": "shell",
+				"command": "pnpm vite",
+				"problemMatcher": [],
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				}
+			}
+		]
+	},
+	"launch": {
+		"configurations": [
+			{
+				"request": "launch",
+				"name": "deno",
+				"type": "pwa-node",
+				"program": "./api/mod.ts",
+				"cwd": "${workspaceFolder}",
+				"runtimeExecutable": "deno",
+				"runtimeArgs": [
+					"run",
+					"--inspect-brk",
+					"-A",
+					"--unstable",
+					"--no-check=remote",
+					"--importmap=api/importmap.json"
+				],
+				"attachSimplePort": 9229
+			},
+			{
+				"name": "browser",
+				"request": "launch",
+				"type": "pwa-msedge",
+				"url": "http://localhost:3000/verwaltung/index.html",
+				"webRoot": "${workspaceFolder}"
+			}
+		],
+		"compounds": [
+			{
+				"name": "Debuging",
+				"configurations": ["deno", "browser"]
+			}
+		],
+	},
 	"settings": {
 		"deno.lint": false,
 		"deno.unstable": true,
-		"deno.enable": true,
-		"deno.importMap": "./api/importmap.json"
+		"deno.enable": false,
+		"deno.importMap": "../api/importmap.json",
+		"deno.internalDebug": true
 	},
 	"extensions": {
 		"unwantedRecommendations": [

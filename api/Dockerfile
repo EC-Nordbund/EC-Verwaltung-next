@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN deno compile --no-check="remote" --importmap="./api/importmap.json" --unstable --allow-net ./mod.ts
+RUN deno compile --no-check="remote" --importmap="./api/importmap.json" --unstable -A ./mod.ts
 
 FROM alpine:latest  
 USER deno
