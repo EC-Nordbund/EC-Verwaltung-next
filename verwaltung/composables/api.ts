@@ -10,7 +10,7 @@ const authToken = computed(() =>
 );
 
 const userData = computed(() =>
-  authToken.value ? JSON.parse(atob(authToken.value)).user : null
+  authToken.value ? JSON.parse(atob(authToken.value.split(".")[1])).user : null
 );
 const tokenList = ref<null | Record<string, string>>(null);
 const currentToken = ref<null | string>(null);

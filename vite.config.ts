@@ -17,6 +17,11 @@ export default defineConfig({
   },
   define: {
     __API_BASE_URL__: JSON.stringify("http://localhost:8080"),
+    __BUILD_ID__: JSON.stringify(
+      new Date().toISOString().split("T")[0].replaceAll("-", ".") +
+        "." +
+        Math.floor((new Date().getTime() % (24 * 60 * 60 * 1000)) / 1000)
+    ),
   },
   plugins: [
     serverCreator(),

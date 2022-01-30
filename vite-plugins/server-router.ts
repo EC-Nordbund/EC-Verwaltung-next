@@ -27,7 +27,7 @@ export default () => {
         export default async ({ params, query, body }) => {
           const url = new URL(\`${pathLit}\`, __API_BASE_URL__)
 
-          if(query) {}
+          if(query) {
             const s = new URLSearchParams(query)
             url.search = s.toString()
           }
