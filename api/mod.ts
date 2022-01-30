@@ -5,12 +5,16 @@ import {
   helpers,
   ServerSentEvent,
 } from "oak";
+import { oakCors } from "cors";
+import "https://deno.land/x/dot_env@0.2.0/load.ts";
 
 // console.log(docxWorker());
 
 import fillRouter from "./.routes.ts";
 
 const app = new Application();
+
+app.use(oakCors());
 
 const baseRouter = new Router();
 

@@ -1,8 +1,16 @@
 import { handleMysql } from "./mysql.ts";
 import { RouterContext, helpers } from "oak";
-import { docxWorker, tnFileWorker, zuschuesseWorker } from "./worker.ts";
+import {
+  docxWorker,
+  tnFileWorker,
+  zuschuesseWorker,
+  mailWorker,
+} from "./worker.ts";
 import * as gotenberg from "gotenberg";
-import { checkAuth, check, RechtTyp } from "./auth.ts";
+import { checkAuth, check, RechtTyp } from "./authTokens.ts";
+import { login } from "./auth.ts";
+
+const mailer = mailWorker();
 
 const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 
@@ -34,6 +42,8 @@ async function createContext(ctx: RouterContext<any>) {
     gotenberg,
     user,
     checkAuth,
+    mailer,
+    login,
     worker: {
       docx: docxWorker,
       tnFile: tnFileWorker,
@@ -73,11 +83,15 @@ export function wrapper(
     });
     resetContext();
 
-    const data = await pData;
-
-    ctx.response.headers.set("content-type", "application/json");
-    ctx.response.status = 200;
-    ctx.response.body = JSON.stringify(data);
+    try {
+      const data = await pData;
+      ctx.response.headers.set("content-type", "application/json");
+      ctx.response.status = 200;
+      ctx.response.body = JSON.stringify(data);
+    } catch (ex: any) {
+      ctx.response.status = 500;
+      ctx.response.body = (ex as Error).message;
+    }
 
     releaseContext(ctx);
   };

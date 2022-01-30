@@ -13,7 +13,7 @@ import serverCreator from "./vite-plugins/server-router";
 
 export default defineConfig({
   server: {
-    open: "/verwaltung/index.html",
+    // open: "/verwaltung/index.html",
   },
   define: {
     __API_BASE_URL__: JSON.stringify("http://localhost:8080"),

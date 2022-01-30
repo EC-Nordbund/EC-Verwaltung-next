@@ -1,7 +1,64 @@
-import { onScopeDispose, watch } from "vue";
-import { useStorage } from "@vueuse/core";
+import { onScopeDispose, watch, ref, computed } from "vue";
+// import { useStorage } from "@vueuse/core";
+import apiLogin from "@api/auth/login.post";
+import {} from "jose";
 
-export const authToken = useStorage("authToken", "");
+const authToken = computed(() =>
+  tokenList.value && currentToken.value && tokenList.value[currentToken.value]
+    ? tokenList.value[currentToken.value]
+    : null
+);
+
+const userData = computed(() =>
+  authToken.value ? JSON.parse(atob(authToken.value)).user : null
+);
+const tokenList = ref<null | Record<string, string>>(null);
+const currentToken = ref<null | string>(null);
+
+const status = computed(() => {
+  if (!tokenList.value) {
+    return 0;
+  }
+
+  if (!currentToken.value) {
+    return 1;
+  }
+
+  return 2;
+});
+
+export function useAuthData() {
+  return { userData, status, tokenList, currentToken };
+}
+
+watch([tokenList, currentToken], () => {
+  localStorage.setItem(
+    "@auth",
+    JSON.stringify({
+      tokens: tokenList.value,
+      current: currentToken.value,
+    })
+  );
+});
+
+window.addEventListener("storage", (ev) => {
+  if (ev.key === "@auth") {
+    tryRestoreSession();
+  }
+});
+
+function tryRestoreSession() {
+  const data = localStorage.getItem("@auth");
+
+  if (!data) return;
+
+  const parsed = JSON.parse(data);
+
+  if ("tokens" in parsed && "current" in parsed) {
+    tokenList.value = parsed.tokens;
+    currentToken.value = parsed.current;
+  }
+}
 
 const invalidationCb: Record<string, (() => void)[]> = {};
 
@@ -29,7 +86,7 @@ let currentSource: EventSource | null = null;
 
 /**
  * Sollte normalerweise nur in core-tools benötigt werden
- * 
+ *
  * @internal
  */
 export function createNewEventSource() {
@@ -58,7 +115,7 @@ export function createNewEventSource() {
 
 /**
  * Wird benutzt um die Authdaten in die API calls zu injecten
- * 
+ *
  * @internal
  */
 export function wrapFetchOptions(opts: RequestInit): RequestInit {
@@ -74,3 +131,24 @@ export function wrapFetchOptions(opts: RequestInit): RequestInit {
 
 // Wenn der authToken sich ändert muss eine neue Eventsource erzeugt werdern
 watch(authToken, createNewEventSource, { immediate: !!authToken.value });
+
+export async function login(username: string, password: string) {
+  const tokens = await apiLogin({
+    params: {},
+    body: { username, password },
+    query: {},
+  });
+
+  tokenList.value = tokens;
+  if (currentToken.value && !tokenList.value[currentToken.value]) {
+    currentToken.value = null;
+  }
+
+  if (Object.values(tokens).length === 1) {
+    currentToken.value = Object.keys(tokens)[0];
+  }
+
+  return true;
+}
+
+tryRestoreSession();

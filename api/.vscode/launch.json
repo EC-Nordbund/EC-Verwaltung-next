@@ -8,14 +8,16 @@
       "request": "launch",
       "name": "Launch Program",
       "type": "pwa-node",
-      "program": "http://localhost:3000/api/mod.ts",
-      "cwd": "${workspaceFolder}",
+      "program": "./api/mod.ts",
+      "cwd": "${workspaceFolder}/../",
       "runtimeExecutable": "C:\\Users\\Sebastian\\.deno\\bin\\deno.EXE",
       "runtimeArgs": [
         "run",
-        "-r",
         "--inspect-brk",
-        "--allow-all"
+        "--allow-all",
+        "--unstable",
+        "--no-check=remote",
+        "--importmap=api/importmap.json"
       ],
       "attachSimplePort": 9229
     }

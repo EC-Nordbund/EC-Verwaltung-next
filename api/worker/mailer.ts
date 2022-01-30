@@ -1,6 +1,16 @@
+// import "https://deno.land/x/dot_env@0.2.0/load.ts";
 import { SmtpClient, SendConfig } from "denomailer";
 
-const client = new SmtpClient();
+const client = new SmtpClient({
+  console_debug: Deno.env.get("DEBUG") === 'on'
+});
+
+await client.connect({
+  hostname: Deno.env.get("SMTP_HOST")!,
+  port: parseInt(Deno.env.get("SMTP_PORT") ?? "25"),
+  username: Deno.env.get("SMTP_USER"),
+  password: Deno.env.get("SMTP_PWD"),
+});
 
 const que: {
   config: SendConfig;
@@ -37,4 +47,3 @@ while (true) {
 
   que.splice(0, 1);
 }
-

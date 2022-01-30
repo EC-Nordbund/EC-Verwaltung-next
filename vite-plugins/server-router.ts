@@ -24,19 +24,25 @@ export default () => {
       const code = `
         import { wrapFetchOptions } from '@/composables/api'
 
-        export default ({ params, query, body }) => {
+        export default async ({ params, query, body }) => {
           const url = new URL(\`${pathLit}\`, __API_BASE_URL__)
 
-          const s = new URLSearchParams(query)
+          if(query) {}
+            const s = new URLSearchParams(query)
             url.search = s.toString()
+          }
 
-          return fetch(url.href, wrapFetchOptions({
+          const res = await fetch(url.href, wrapFetchOptions({
             method: '${METHOD}',
             headers: {
               'content-type': 'application/json'
             },
             body: JSON.stringify(body)
-          })).then(res => res.json())
+          }))
+
+          if(res.status !== 200) throw new Error(await res.text())
+
+          return res.json()
         }
       `;
 

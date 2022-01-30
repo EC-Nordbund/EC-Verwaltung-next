@@ -1,103 +1,83 @@
-import { jwtVerify, SignJWT, importPKCS8 } from "jose";
+import { getClient } from "./mysql.ts";
+import { createTokenSet } from "./authTokens.ts";
+const byteToHex: string[] = [];
 
-const __ALG__ = "RS512";
-
-const privateKey = await importPKCS8("", __ALG__);
-const publicKey = await importPKCS8("", __ALG__);
-
-interface Userdata {
-  username: string;
-  validUntil: string;
-
-  email: string;
+for (let n = 0; n <= 0xff; ++n) {
+  const hexOctet = n.toString(16).padStart(2, "0");
+  byteToHex.push(hexOctet);
 }
 
-interface JWTData extends Userdata {
-  rechte: Rechte;
+function hex(arrayBuffer: ArrayBuffer) {
+  const buff = new Uint8Array(arrayBuffer);
+  const hexOctets = []; // new Array(buff.length) is even faster (preallocates necessary array size), then use hexOctets[i] instead of .push()
+
+  for (let i = 0; i < buff.length; ++i) hexOctets.push(byteToHex[buff[i]]);
+
+  return hexOctets.join("");
 }
 
-type Rechte =
-  | "admin"
-  | { type: "leiter"; id: number; veranstaltung: string }
-  | { type: "fzVerantwortlicher"; id: number; ort: string }
-  | { type: "websiteOrt"; id: number; ort: string };
+const textEncoder = new TextEncoder();
 
-export async function check(key: string): Promise<JWTData> {
-  const ret = await jwtVerify(key, publicKey, {
-    algorithms: [__ALG__],
-    issuer: ["ec"],
-    clockTolerance: 0,
-  });
-
-  return ret.payload.user as JWTData;
+async function hash(str: string) {
+  return hex(await crypto.subtle.digest("sha-512", textEncoder.encode(str)));
 }
 
-export type RechtTyp = "leiter" | "fzVerantwortlicher" | "websiteOrt";
+const __PEPPER__ = Deno.env.get("PEPPER") ?? "25r384o23ju4nhrf3uq";
 
-export function checkAuth(
-  r: Rechte,
-  allowed: Partial<Record<RechtTyp, number[] | number>>
-) {
-  if (r === "admin") return true;
+export async function login(username: string, password: string) {
+  const client = await getClient();
 
-  const rr = allowed[r.type];
+  return await client.useConnection(async (con) => {
+    const data:
+      | [
+          {
+            user_id: number;
+            username: string;
+            password: string;
+            email: string;
+            salt: string;
+            name: string;
+            valid_until: Date;
+            is_admin: boolean;
+          }
+        ]
+      | [] = (await con.query(
+      `SELECT * FROM user WHERE username = ? AND valid_until > NOW()`,
+      [username]
+    )) as [any] | [];
 
-  if (!rr) return false;
-
-  if (typeof rr === "number") return rr === r.id;
-
-  return rr.includes(r.id);
-}
-
-async function generateJWT(user: Userdata, rechte: Rechte) {
-  const jwt = await new SignJWT({
-    user: {
-      ...user,
-      rechte,
-    },
-  })
-    .setProtectedHeader({
-      alg: __ALG__,
-    })
-    .setIssuer("ec")
-    .setIssuedAt()
-    .setExpirationTime("6 hours")
-    .sign(privateKey, {});
-
-  return jwt;
-}
-
-export async function createTokenSet(user: Userdata, rechte: Rechte[]) {
-  const tokens: Record<string, string> = {};
-
-  for (let i = 0; i < rechte.length; i++) {
-    const token = await generateJWT(user, rechte[i]);
-
-    const recht = rechte[i];
-
-    let str = "";
-
-    if (recht === "admin") {
-      str = "Administrator";
-    } else {
-      switch (recht.type) {
-        case "leiter":
-          str = `Leiter (${recht.veranstaltung})`;
-
-          break;
-        case "fzVerantwortlicher":
-          str = `FZ für Ort ${recht.ort}`;
-          break;
-        case "websiteOrt":
-          str = `Website für Ort ${recht.ort}`;
-          break;
-        default:
-          break;
-      }
+    if (data.length === 0) {
+      throw new Error("Benutzername oder Passwort sind falsch!");
     }
 
-    tokens[str] = token;
-  }
+    const pwdHash = await hash(`${__PEPPER__}${data[0].salt}${password}`);
 
-  return tokens;
+    if (pwdHash !== data[0].password) {
+      throw new Error("Benutzername oder Passwort sind falsch!");
+    }
+
+    const rechte: any[] = (
+      (await con.query("SELECT * FROM user_rechte WHERE user_id = ?", [
+        data[0].user_id,
+      ])) as any[]
+    ).map((v) => ({
+      type: v.recht,
+      id: v.recht_object_id,
+      name: v.recht_object_name,
+    }));
+
+    if (data[0].is_admin) {
+      rechte.push("admin");
+    }
+
+    return createTokenSet(
+      {
+        username,
+        email: data[0].email,
+        validUntil: data[0].valid_until.toISOString().split("T")[0],
+        name: data[0].name,
+      },
+      rechte
+    );
+  });
 }
