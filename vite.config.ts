@@ -47,6 +47,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "verwaltung"),
+      "@types": resolve(__dirname, "types"),
     },
   },
 });

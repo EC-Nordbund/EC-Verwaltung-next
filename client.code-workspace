@@ -5,19 +5,12 @@
 			"path": "types"
 		},
 		{
-			"name": "api",
-			"path": "api"
-		},
-		{
 			"name": "verwaltung",
 			"path": "verwaltung"
 		}
 	],
 	"settings": {
-		"deno.lint": false,
-		"deno.unstable": true,
-		"deno.enable": true,
-		"deno.importMap": "./api/importmap.json",
+		"deno.enable": false
 	},
 	"extensions": {
 		"unwantedRecommendations": [

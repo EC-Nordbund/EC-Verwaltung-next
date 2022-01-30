@@ -1,22 +1,39 @@
 import { handleMysql } from "./mysql.ts";
 import { RouterContext, helpers } from "oak";
-
 import { docxWorker, tnFileWorker, zuschuesseWorker } from "./worker.ts";
-
 import * as gotenberg from "gotenberg";
+import { checkAuth, check, RechtTyp } from "./auth.ts";
 
 const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 
-let currentContext: ReturnType<typeof createContext> | null;
+let currentContext: Awaited<ReturnType<typeof createContext>> | null;
 
-function createContext(ctx: RouterContext<any>) {
+async function handleAuth(ctx: RouterContext<any>) {
+  const authToken = ctx.request.headers.get("authentication");
+
+  if (!authToken) return { user: null, checkAuth: () => false };
+
+  const userData = await check(authToken);
+
+  return {
+    user: userData,
+    checkAuth: (r: Partial<Record<RechtTyp, number | number[]>> = {}) => {
+      return checkAuth(userData.rechte, r);
+    },
+  };
+}
+
+async function createContext(ctx: RouterContext<any>) {
   const [query, mysql_release] = handleMysql();
+  const { user, checkAuth } = await handleAuth(ctx);
 
   map.set(ctx, [mysql_release]);
 
   const ecCtx = {
     query,
     gotenberg,
+    user,
+    checkAuth,
     worker: {
       docx: docxWorker,
       tnFile: tnFileWorker,
@@ -48,7 +65,7 @@ export function wrapper(
   cb: (args: { params: any; query: any; body: any }) => Promise<any>
 ) {
   return async (ctx: RouterContext<any>) => {
-    createContext(ctx);
+    await createContext(ctx);
     const pData = cb({
       params: ctx.params,
       query: helpers.getQuery(ctx),
