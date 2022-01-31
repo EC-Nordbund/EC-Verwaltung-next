@@ -1,16 +1,16 @@
-import * as fs from "fs";
-import * as path from "path";
+// import * as fs from "fs";
+// import * as path from "path";
 
-function getAllFiles(dirPath, arrayOfFiles = []) {
-  const files = fs.readdirSync(dirPath);
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
+  const files = Deno.readDirSync(dirPath);
 
-  files.forEach(function (file) {
-    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
+  for (const file of files) {
+    if (file.isDirectory) {
+      arrayOfFiles = getAllFiles(dirPath + "/" + file.name, arrayOfFiles);
     } else {
-      arrayOfFiles.push(path.join(path.dirname(import.meta.url), dirPath, "/", file));
+      arrayOfFiles.push(dirPath + "/" + file.name);
     }
-  });
+  }
 
   return arrayOfFiles;
 }
@@ -27,20 +27,21 @@ let code = `/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } fro
 files.forEach((file, i) => {
   const [p, method] = file.split(".");
 
-  const fullPath = '/' + p
-    .split("/")
-    .map((v) => (v[0] !== "_" ? v : ":" + v.slice(1)))
-    .join("/")//.slice('/api'.length);
+  const fullPath =
+    "/" +
+    p
+      .split("/")
+      .map((v) => (v[0] !== "_" ? v : ":" + v.slice(1)))
+      .join("/"); //.slice('/api'.length);
 
   imports += `import route_${i} from './routes/${file}'\n`;
 
   calls += `  // @ts-ignore typesmissmach is ok\n  router.${method}(${JSON.stringify(
     fullPath
   )},  wrapper(route_${i}))\n`;
-
 });
 
 code += imports;
 code += `export default (router: Router) => {\n${calls}};\n`;
 
-fs.writeFileSync('./api/.routes.ts', code)
+Deno.writeTextFileSync("./.routes.ts", code);
