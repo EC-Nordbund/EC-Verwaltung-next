@@ -28,12 +28,11 @@ jobs:
         with:
           deno-version: v1.18.1
 
-      - run: cd api
       - name: Verify formatting
-        run: deno fmt --check
+        run: cd api && deno fmt --check
 
       - name: Run linter
-        run: deno lint
+        run: cd api && deno lint
 
       - name: Compile
-        run: deno compile --no-check="remote" --importmap="./api/importmap.json" --unstable -A ./mod.ts
+        run: cd api && deno compile --no-check="remote" --importmap="./api/importmap.json" --unstable -A ./mod.ts
