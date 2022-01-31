@@ -13,6 +13,8 @@
   },
   "scripts": {
     "dev": "vite",
+    "lint": "eslint . --ext .ts,.vue,.js",
+    "fmt": "prettier .",
     "build": "vite build",
     "types": "vue-tsc -p ./verwaltung/tsconfig.json",
     "routes": "node createRoutes.mjs"
