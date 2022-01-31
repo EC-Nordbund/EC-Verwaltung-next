@@ -35,4 +35,4 @@ jobs:
         run: cd api && deno lint
 
       - name: Compile
-        run: cd api &&  deno run --allow-read=./routes --allow-write ./createRoutes.ts && deno compile --no-check="remote" --importmap="./importmap.json" --unstable -A ./mod.ts
+        run: cd api &&  deno run --allow-read --allow-write ./createRoutes.ts && deno compile --no-check="remote" --importmap="./importmap.json" --unstable -A ./mod.ts
