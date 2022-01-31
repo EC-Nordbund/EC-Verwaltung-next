@@ -17,7 +17,8 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
 
 const files = getAllFiles("./routes")
   .map((v) => v.split(/\\|\//).join("/"))
-  .map((v) => v.split("/api/routes/")[1]);
+  .map((v) => v.split("/routes/")[1])
+  .filter(Boolean);
 
 let imports = "";
 let calls = "";
