@@ -5,14 +5,16 @@ Wir nutzen den Folgenden Stack:
 
 * Vuetify 3 (nightly)
 * Script Setup
-* Vue 3 
+* Vue 3
 * Eigene API plugins
 * oak-Server
 * Server Send Events um invalidation von Daten auszuführen
 * Deno -->
 
 ## Liste mit Tools die wir nutzen
+
 ### Verwaltung
+
 1. TypeScript
 2. Vite (https://vitejs.dev)
 3. Vue 3 (https://v3.vuejs.org/)
@@ -20,11 +22,13 @@ Wir nutzen den Folgenden Stack:
 5. Sass (in externen dateien als sass in style tags als scss)
 6. unplugin-vue-components mit eigenen resolver
 7. vite-plugin-inspect zum debugen
-11. vue-router 4 fürs routing
-8. vite-plugin-pages für einfaches routing
-9. vue-tsc für typechecking
-10. @mdi/js als iconset mit custom vite plugin für simplere nutzng
+8. vue-router 4 fürs routing
+9. vite-plugin-pages für einfaches routing
+10. vue-tsc für typechecking
+11. @mdi/js als iconset mit custom vite plugin für simplere nutzng
+
 ### API
+
 1. Deno (https://deno.land)
 2. MySQL-Client (https://deno.land/x/mysql)
 3. MailClient (https://deno.land/x/denomailer)

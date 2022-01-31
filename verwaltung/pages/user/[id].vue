@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import loadUser from '@api/admin/user/_id.get'
-import { ref, computed } from 'vue'
-import { onInvalidate } from '@/composables/api'
-import { useRoute } from 'vue-router';
+import loadUser from "@api/admin/user/_id.get";
+import { ref, computed } from "vue";
+import { onInvalidate } from "@/composables/api";
+import { useRoute } from "vue-router";
 
-const user = ref<Awaited<ReturnType<typeof loadUser>>>({} as any)
-const route = useRoute()
+const user = ref<Awaited<ReturnType<typeof loadUser>>>({} as any);
+const route = useRoute();
 
-const loaded = computed(() => 'user' in user.value)
+const loaded = computed(() => "user" in user.value);
 
 async function loadData() {
-  user.value = await loadUser({ query: {}, body: {}, params: { id: route.params.id.toString() } })
+  user.value = await loadUser({
+    query: {},
+    body: {},
+    params: { id: route.params.id.toString() },
+  });
 }
-loadData()
+loadData();
 
-onInvalidate([`user:${route.params.id}`], () => loadData())
+onInvalidate([`user:${route.params.id}`], () => loadData());
 </script>
 <template lang="pug">
 v-container

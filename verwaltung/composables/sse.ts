@@ -36,8 +36,7 @@ export function createNewEventSource() {
     currentSource = null;
   }
 
-  if (!authToken.value)
-    return;
+  if (!authToken.value) return;
 
   const source = new EventSource(
     new URL("/_sse?authToken=" + authToken.value, __API_BASE_URL__)

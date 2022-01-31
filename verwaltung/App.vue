@@ -1,47 +1,42 @@
 <script setup lang="ts">
 import { useAuthData, login } from "./composables/api";
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 import { useStorage } from "@vueuse/core";
 
-const build = __BUILD_ID__
+const build = __BUILD_ID__;
 
-const {
-  status,
-  currentToken,
-  tokenList,
-  userData
-} = useAuthData()
+const { status, currentToken, tokenList, userData } = useAuthData();
 
-const tokenNames = computed(() => Object.keys(tokenList.value!))
+const tokenNames = computed(() => Object.keys(tokenList.value!));
 
-const singleUser = computed(() => tokenNames.value.length === 0)
+const singleUser = computed(() => tokenNames.value.length === 0);
 
-const username = useStorage('username', '')
-const password = ref('')
+const username = useStorage("username", "");
+const password = ref("");
 
-const loading = ref(false)
+const loading = ref(false);
 
 async function loginHandler() {
   try {
-    loading.value = true
-    await login(username.value, password.value)
-    loading.value = false
-    password.value = ''
+    loading.value = true;
+    await login(username.value, password.value);
+    loading.value = false;
+    password.value = "";
   } catch (ex) {
-    alert(ex)
-    loading.value = false
+    alert(ex);
+    loading.value = false;
   }
 }
 
 function logoutHandler() {
-  currentToken.value = null
-  tokenList.value = null
+  currentToken.value = null;
+  tokenList.value = null;
 }
 
-const showPWD = ref(false)
+const showPWD = ref(false);
 
-const accountDialog = ref(false)
-const drawer = ref<boolean>(null!)
+const accountDialog = ref(false);
+const drawer = ref<boolean>(null!);
 </script>
 <template lang="pug">
 v-app

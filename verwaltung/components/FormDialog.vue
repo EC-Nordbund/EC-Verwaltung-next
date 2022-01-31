@@ -1,28 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useAlert } from '@/composables/alerts'
+import { ref } from "vue";
+import { useAlert } from "@/composables/alerts";
 
-const showDialog = ref(false)
+const showDialog = ref(false);
 
 const props = defineProps<{
-  title: string
-}>()
+  title: string;
+}>();
 
 const emit = defineEmits<{
-  (event: 'save'): void
-}>()
+  (event: "save"): void;
+}>();
 
-const valid = ref<boolean>(null!)
+const valid = ref<boolean>(null!);
 
 function save() {
   if (valid.value) {
-    showDialog.value = false
-    emit('save')
+    showDialog.value = false;
+    emit("save");
   } else {
-
   }
 }
-
 </script>
 <template lang="pug">
 v-dialog(fullscreen v-model="showDialog")
