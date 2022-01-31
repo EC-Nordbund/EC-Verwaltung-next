@@ -22,13 +22,13 @@ const files = getAllFiles("api/routes")
 let imports = "";
 let calls = "";
 
-let code = `/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n`;
+let code =
+  `/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n`;
 
 files.forEach((file, i) => {
   const [p, method] = file.split(".");
 
-  const fullPath =
-    "/" +
+  const fullPath = "/" +
     p
       .split("/")
       .map((v) => (v[0] !== "_" ? v : ":" + v.slice(1)))
@@ -36,9 +36,11 @@ files.forEach((file, i) => {
 
   imports += `import route_${i} from './routes/${file}'\n`;
 
-  calls += `  // @ts-ignore typesmissmach is ok\n  router.${method}(${JSON.stringify(
-    fullPath
-  )},  wrapper(route_${i}))\n`;
+  calls += `  // @ts-ignore typesmissmach is ok\n  router.${method}(${
+    JSON.stringify(
+      fullPath,
+    )
+  },  wrapper(route_${i}))\n`;
 });
 
 code += imports;
