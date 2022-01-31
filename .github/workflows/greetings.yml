@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Hi! Thanks for the issue. This project is only used internaly so feel free to use any of our code (under the GPLv3 Licence) but do not expect proper support!'
+        pr-message: 'Hi! Thanks for the PR. This project is only use internaly so feel free to use any of our code (under the GPLv3 Licence) but do not expect proper support! - We might merge your PR or close it with no explanation!'

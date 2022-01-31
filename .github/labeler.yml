@@ -1,0 +1,10 @@
+frontend:
+- /verwaltung/**/*
+
+build:
+- /package.json
+- /vite.config.ts
+- /vite-plugins/**/*
+
+api:
+- /api/**/*
