@@ -22,13 +22,13 @@ export default async (opts: {
   const user = (
     await ctx.mysql.query(
       "SELECT user_id, username, name, valid_until, is_admin FROM user WHERE user_id = ?",
-      [parseInt(opts.params.id)]
+      [parseInt(opts.params.id)],
     )
   )[0] as unknown as User;
 
   const rechte = (await ctx.mysql.query(
     "SELECT * FROM user_rechte WHERE user_id = ?",
-    [parseInt(opts.params.id)]
+    [parseInt(opts.params.id)],
   )) as {
     user_rechte_id: number;
     recht: string;

@@ -1,4 +1,4 @@
-import { Router, ServerSentEventTarget, ServerSentEvent } from "oak";
+import { Router, ServerSentEvent, ServerSentEventTarget } from "oak";
 import { helpers } from "oak";
 import { check } from "./authTokens.ts";
 

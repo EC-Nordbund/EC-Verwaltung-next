@@ -63,7 +63,7 @@ export function zuschuesseWorker() {
       deno: {
         namespace: true,
       },
-    }
+    },
   );
 
   idCounter++;

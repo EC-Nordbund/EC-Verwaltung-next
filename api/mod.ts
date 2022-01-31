@@ -18,7 +18,7 @@ app.use(
       "https://ec-nordbund.de",
       "https://www.ec-nordbund.de",
     ],
-  })
+  }),
 );
 
 const baseRouter = new Router();

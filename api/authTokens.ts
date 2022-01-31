@@ -1,17 +1,17 @@
-import { jwtVerify, SignJWT, importPKCS8, importSPKI } from "jose";
+import { importPKCS8, importSPKI, jwtVerify, SignJWT } from "jose";
 
 const __ALG__ = "RS512";
 
 const privateKey = await importPKCS8(
   await Deno.readTextFile(
-    new URL("./files/private_unencrypted.pem", import.meta.url)
+    new URL("./files/private_unencrypted.pem", import.meta.url),
   ),
-  __ALG__
+  __ALG__,
 );
 
 const publicKey = await importSPKI(
   await Deno.readTextFile(new URL("./files/public.pem", import.meta.url)),
-  __ALG__
+  __ALG__,
 );
 
 interface Userdata {
@@ -46,7 +46,7 @@ export type RechtTyp = "leiter" | "fzVerantwortlicher" | "websiteOrt";
 
 export function checkAuth(
   r: Rechte,
-  allowed: Partial<Record<RechtTyp | "admin", number[] | number>>
+  allowed: Partial<Record<RechtTyp | "admin", number[] | number>>,
 ) {
   if (r === "admin") return true;
 
@@ -60,8 +60,9 @@ export function checkAuth(
     return true;
   }
 
-  if (!rr.includes(r.id))
+  if (!rr.includes(r.id)) {
     throw new Error("Du hast nicht die benötigten Rechte!");
+  }
 
   return true;
 }

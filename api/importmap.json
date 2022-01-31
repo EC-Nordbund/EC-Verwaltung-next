@@ -3,7 +3,7 @@
     "mysql": "https://deno.land/x/mysql@v2.10.2/mod.ts",
     "oak": "https://deno.land/x/oak@v10.1.0/mod.ts",
     "node": "./._empty.d.ts",
-    "sax":  "./._empty.d.ts",
+    "sax": "./._empty.d.ts",
     "gotenberg": "https://deno.land/x/gotenberg@0.3.1/mod.ts",
     "jose": "https://deno.land/x/jose@v4.4.0/index.ts",
     "xlsx": "https://raw.githubusercontent.com/EC-Nordbund/deno-xlsx-template/8d47fff25897da3eb8e12e29a301ee8f9b63c315/mod.ts",
@@ -12,7 +12,7 @@
     "@types": "../types/types.ts",
     "cors": "https://deno.land/x/cors@v1.2.2/oakCors.ts",
     "env": "https://deno.land/x/dot_env@0.2.0/load.ts",
-    
+
     "comlink": "./deps/comlink.ts",
     "comlink_entry_types": "https://unpkg.com/comlink@4.3.1/dist/esm/comlink.d.ts",
     "comlink_entry": "https://unpkg.com/comlink@4.3.1/dist/esm/comlink.mjs",
@@ -21,5 +21,5 @@
     "docx-templates": "./deps/docx-templates.ts",
     "docx_types": "https://unpkg.com/docx-templates@4.9.0/lib/bundled.d.ts",
     "docx_entry": "https://unpkg.com/docx-templates@4.9.0/lib/browser.js"
-    }
+  }
 }

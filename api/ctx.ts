@@ -1,13 +1,13 @@
 import { client } from "./mysql.ts";
-import { RouterContext, helpers } from "oak";
+import { helpers, RouterContext } from "oak";
 import {
   docxWorker,
+  mailWorker,
   tnFileWorker,
   zuschuesseWorker,
-  mailWorker,
 } from "./worker.ts";
 import * as gotenberg from "gotenberg";
-import { checkAuth, check, RechtTyp } from "./authTokens.ts";
+import { check, checkAuth, RechtTyp } from "./authTokens.ts";
 import { login } from "./auth.ts";
 
 const mailer = mailWorker();
@@ -19,22 +19,23 @@ let currentContext: Awaited<ReturnType<typeof createContext>> | null;
 async function handleAuth(ctx: RouterContext<any>) {
   const authToken = ctx.request.headers.get("authorization");
 
-  if (!authToken)
+  if (!authToken) {
     return {
       user: null,
       checkAuth: (
-        _r: Partial<Record<RechtTyp | "admin", number | number[]>> = {}
+        _r: Partial<Record<RechtTyp | "admin", number | number[]>> = {},
       ) => {
         throw new Error("Du hast nicht die Rechte!");
       },
     };
+  }
 
   const userData = await check(authToken);
 
   return {
     user: userData,
     checkAuth: (
-      r: Partial<Record<RechtTyp | "admin", number | number[]>> = {}
+      r: Partial<Record<RechtTyp | "admin", number | number[]>> = {},
     ) => {
       return checkAuth(userData.rechte, r);
     },
@@ -81,7 +82,7 @@ function releaseContext(ctx: RouterContext<any>) {
 }
 
 export function wrapper(
-  cb: (args?: { params?: any; query?: any; body?: any }) => Promise<any>
+  cb: (args?: { params?: any; query?: any; body?: any }) => Promise<any>,
 ) {
   return async (ctx: RouterContext<any>) => {
     await createContext(ctx);

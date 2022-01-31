@@ -28,21 +28,21 @@ export async function login(username: string, password: string) {
   return await client.useConnection(async (con) => {
     const data:
       | [
-          {
-            user_id: number;
-            username: string;
-            password: string;
-            email: string;
-            salt: string;
-            name: string;
-            valid_until: Date;
-            is_admin: boolean;
-          }
-        ]
+        {
+          user_id: number;
+          username: string;
+          password: string;
+          email: string;
+          salt: string;
+          name: string;
+          valid_until: Date;
+          is_admin: boolean;
+        },
+      ]
       | [] = (await con.query(
-      `SELECT * FROM user WHERE username = ? AND valid_until > NOW()`,
-      [username]
-    )) as [any] | [];
+        `SELECT * FROM user WHERE username = ? AND valid_until > NOW()`,
+        [username],
+      )) as [any] | [];
 
     if (data.length === 0) {
       throw new Error("Benutzername oder Passwort sind falsch!");
@@ -75,7 +75,7 @@ export async function login(username: string, password: string) {
         validUntil: data[0].valid_until.toISOString().split("T")[0],
         name: data[0].name,
       },
-      rechte
+      rechte,
     );
   });
 }

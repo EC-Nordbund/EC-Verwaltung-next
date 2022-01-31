@@ -20,7 +20,7 @@ export default async (_opts: {
   });
 
   const res = (await ctx.mysql.query(
-    "SELECT user_id, username, name, valid_until, is_admin FROM user"
+    "SELECT user_id, username, name, valid_until, is_admin FROM user",
   )) as User[];
 
   // const res = await ctx.login(options.username, options.password);

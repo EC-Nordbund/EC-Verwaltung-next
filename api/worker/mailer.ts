@@ -1,4 +1,4 @@
-import { SmtpClient, SendConfig } from "denomailer";
+import { SendConfig, SmtpClient } from "denomailer";
 
 const client = new SmtpClient({
   console_debug: Deno.env.get("DEBUG") === "on",
