@@ -22,7 +22,8 @@ export function docxWorker() {
   const worker = new Worker(new URL("./worker/docx.ts", import.meta.url), {
     type: "module",
     deno: {
-      namespace: true,
+      // Dieser darf nicht auf DENO zugreifen damit können wir belibige templates laufen lassen da alles isoliert ist!
+      namespace: false,
     },
   });
 

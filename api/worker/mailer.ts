@@ -1,11 +1,8 @@
-// import "https://deno.land/x/dot_env@0.2.0/load.ts";
 import { SmtpClient, SendConfig } from "denomailer";
 
 const client = new SmtpClient({
   console_debug: Deno.env.get("DEBUG") === "on",
 });
-
-console.log(Deno.env.get("SMTP_HOST"));
 
 await client.connect({
   hostname: Deno.env.get("SMTP_HOST")!,

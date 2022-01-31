@@ -1,4 +1,4 @@
-import { handleMysql, client } from "./mysql.ts";
+import { client } from "./mysql.ts";
 import { RouterContext, helpers } from "oak";
 import {
   docxWorker,
@@ -42,13 +42,11 @@ async function handleAuth(ctx: RouterContext<any>) {
 }
 
 async function createContext(ctx: RouterContext<any>) {
-  const [query, mysql_release] = handleMysql();
   const { user, checkAuth } = await handleAuth(ctx);
 
-  map.set(ctx, [mysql_release]);
+  map.set(ctx, []);
 
   const ecCtx = {
-    query,
     gotenberg,
     user,
     checkAuth,
@@ -83,7 +81,7 @@ function releaseContext(ctx: RouterContext<any>) {
 }
 
 export function wrapper(
-  cb: (args: { params: any; query: any; body: any }) => Promise<any>
+  cb: (args?: { params?: any; query?: any; body?: any }) => Promise<any>
 ) {
   return async (ctx: RouterContext<any>) => {
     await createContext(ctx);

@@ -1,52 +1,33 @@
-import {
-  Application,
-  Router,
-  ServerSentEventTarget,
-  helpers,
-  ServerSentEvent,
-} from "oak";
+import { Application, Router } from "oak";
 import { oakCors } from "cors";
-import "https://deno.land/x/dot_env@0.2.0/load.ts";
-
-// console.log(docxWorker());
-
+import "env";
+import { setupSSE } from "./sse.ts";
 import fillRouter from "./.routes.ts";
 
 const app = new Application();
 
-app.use(oakCors());
+app.use(
+  oakCors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://localhost:8000",
+      "http://localhost:8080",
+      "https://verwaltung.ec-nordbund.de",
+      "https://test.verwaltung.ec-nordbund.de",
+      "https://ec-nordbund.de",
+      "https://www.ec-nordbund.de",
+    ],
+  })
+);
 
 const baseRouter = new Router();
-
-const targets: ServerSentEventTarget[] = [];
-
-baseRouter.get("/_sse", (ctx) => {
-  const target = ctx.sendEvents();
-
-  const auth = helpers.getQuery(ctx).authToken;
-
-  // TODO: add auth check
-  if (false) {
-    target.close();
-    return;
-  }
-
-  targets.push(target);
-
-  let to = setTimeout(() => {
-    target.close();
-  }, 1000 * 60 * 60); // max 1 Stunde alive!
-
-  target.addEventListener("close", () => {
-    clearTimeout(to);
-    targets.splice(targets.indexOf(target), 1);
-  });
-});
 
 baseRouter.get("/", (ctx) => {
   ctx.response.body = "Hello World!";
 });
 
+setupSSE(baseRouter);
 fillRouter(baseRouter);
 
 app.use(baseRouter.routes());
@@ -55,7 +36,3 @@ app.use(baseRouter.allowedMethods());
 app.listen({ port: 8080 });
 
 console.log("Server running in Port 8080!");
-
-export function sendData(ev: ServerSentEvent) {
-  targets.forEach((t) => t.dispatchEvent(ev));
-}

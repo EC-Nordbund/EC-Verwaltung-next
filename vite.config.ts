@@ -11,6 +11,7 @@ import { vuetifyResolver } from "./vite-plugins/vuetify-resolver";
 
 import serverCreator from "./vite-plugins/server-router";
 
+
 export default defineConfig({
   server: {
     // open: "/verwaltung/index.html",
@@ -37,18 +38,26 @@ export default defineConfig({
       resolvers: [vuetifyResolver()],
     }),
     mdiIcons(),
+    viteSingleFile(),
   ],
   build: {
+    target: "esnext",
+    assetsInlineLimit: 100000000,
+    chunkSizeWarningLimit: 100000000,
+    cssCodeSplit: false,
+    brotliSize: false,
     rollupOptions: {
       input: {
         index: resolve(__dirname, "verwaltung/index.html"),
       },
       output: {
+        // manualChunks: undefined,
+        // entryFileNames: "index.js",
+        inlineDynamicImports: true,
         manualChunks: undefined,
-        entryFileNames: "index.js",
       },
     },
-    minify: false,
+    // minify: false,
   },
   resolve: {
     alias: {

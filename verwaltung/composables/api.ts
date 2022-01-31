@@ -102,13 +102,11 @@ export function createNewEventSource() {
     new URL("/_sse?authToken=" + authToken.value, __API_BASE_URL__)
   );
 
-  source.addEventListener("message", (event) => {
-    if (event.data.type === "invalidate") {
-      if (invalidationCb[event.data.key]) {
-        invalidationCb[event.data.key].forEach((cb) => cb());
-      }
+  source.addEventListener("invalidate", ((event: MessageEvent) => {
+    if (invalidationCb[event.data]) {
+      invalidationCb[event.data].forEach((cb) => cb());
     }
-  });
+  }) as any);
 
   currentSource = source;
 }
