@@ -15,7 +15,7 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
   return arrayOfFiles;
 }
 
-const files = getAllFiles("api/routes")
+const files = getAllFiles("./routes")
   .map((v) => v.split(/\\|\//).join("/"))
   .map((v) => v.split("/api/routes/")[1]);
 

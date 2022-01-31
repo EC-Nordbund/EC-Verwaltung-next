@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN deno run ./createRoutes.ts
+RUN deno run -A ./createRoutes.ts
 RUN deno compile --no-check="remote" --importmap="./importmap.json" --unstable -A ./mod.ts
 
 FROM alpine:latest  
