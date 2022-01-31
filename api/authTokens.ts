@@ -46,7 +46,7 @@ export type RechtTyp = "leiter" | "fzVerantwortlicher" | "websiteOrt";
 
 export function checkAuth(
   r: Rechte,
-  allowed: Partial<Record<RechtTyp, number[] | number>>
+  allowed: Partial<Record<RechtTyp | "admin", number[] | number>>
 ) {
   if (r === "admin") return true;
 

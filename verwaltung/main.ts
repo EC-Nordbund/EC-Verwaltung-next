@@ -4,6 +4,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 
 import "vuetify/lib/styles/main.sass";
+import './styles/global.sass'
 
 import { createVuetify } from "vuetify";
 import { mdi, aliases } from "vuetify/lib/iconsets/mdi-svg";
@@ -77,6 +78,12 @@ const vuetify = createVuetify({
       },
     },
   },
+  defaults: {
+    global: {},
+    VBtn: {
+      color: 'primary'
+    }
+  }
 });
 
 const app = createApp(App).use(vuetify).use(router);

@@ -34,7 +34,7 @@ files.forEach((file, i) => {
 
   imports += `import route_${i} from './routes/${file}'\n`;
 
-  calls += `  router.${method}(${JSON.stringify(
+  calls += `  // @ts-ignore typesmissmach is ok\n  router.${method}(${JSON.stringify(
     fullPath
   )},  wrapper(route_${i}))\n`;
 

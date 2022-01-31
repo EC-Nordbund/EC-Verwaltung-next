@@ -17,8 +17,12 @@ export default () => {
       const [p, METHOD] = path.split(".");
       const partedPath = p.split(/\\|\//);
 
+      console.log(partedPath);
+
       const pathLit = partedPath
-        .map((part) => (part[0] === "_" ? "params." + part.slice(1) : part))
+        .map((part) =>
+          part[0] === "_" ? "${params." + part.slice(1) + "}" : part
+        )
         .join("/");
 
       const code = `
@@ -34,10 +38,14 @@ export default () => {
 
           const res = await fetch(url.href, wrapFetchOptions({
             method: '${METHOD}',
-            headers: {
+            ${
+              METHOD !== "get"
+                ? `headers: {
               'content-type': 'application/json'
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body)`
+                : ""
+            }
           }))
 
           if(res.status !== 200) throw new Error(await res.text())

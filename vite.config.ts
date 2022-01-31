@@ -22,7 +22,7 @@ export default defineConfig({
         "." +
         Math.floor((new Date().getTime() % (24 * 60 * 60 * 1000)) / 1000)
     ),
-    __VUE_OPTIONS_API__: "false",
+    // __VUE_OPTIONS_API__: "false",
   },
   plugins: [
     serverCreator(),

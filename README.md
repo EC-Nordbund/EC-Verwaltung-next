@@ -27,7 +27,7 @@ Um eine API funktion in der Verwaltung zu importieren nutze den `@api/...` prefi
 ## TODO (bevor es richtig losgehen kann)
 
 ### API
-1. Auth
+1. Auth - DONE
 #### Folgende Deno kompatible Packte / Bibliotheken
 1. JWT - DONE
 2. XLSX Templates - DONE
@@ -36,4 +36,4 @@ Um eine API funktion in der Verwaltung zu importieren nutze den `@api/...` prefi
 ##### Optional
 1. web push
 ### Verwaltung
-1. Auth
+1. Auth - DONE

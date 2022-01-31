@@ -1,4 +1,4 @@
-import { getClient } from "./mysql.ts";
+import { client } from "./mysql.ts";
 import { createTokenSet } from "./authTokens.ts";
 const byteToHex: string[] = [];
 
@@ -25,8 +25,6 @@ async function hash(str: string) {
 const __PEPPER__ = Deno.env.get("PEPPER") ?? "25r384o23ju4nhrf3uq";
 
 export async function login(username: string, password: string) {
-  const client = await getClient();
-
   return await client.useConnection(async (con) => {
     const data:
       | [

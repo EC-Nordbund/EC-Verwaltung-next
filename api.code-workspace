@@ -1,12 +1,12 @@
 {
 	"folders": [
 		{
-			"name": "types",
-			"path": "types"
-		},
-		{
 			"name": "api",
 			"path": "api"
+		},
+		{
+			"name": "types",
+			"path": "types"
 		}
 	],
 	"launch": {
@@ -16,7 +16,7 @@
 				"name": "deno",
 				"type": "pwa-node",
 				"program": "./api/mod.ts",
-				"cwd": "${workspaceFolder}",
+				"cwd": "${workspaceFolder:api}/..",
 				"runtimeExecutable": "deno",
 				"runtimeArgs": [
 					"run",
@@ -24,7 +24,7 @@
 					"-A",
 					"--unstable",
 					"--no-check=remote",
-					"--importmap=api/importmap.json"
+					"--importmap=./api/importmap.json"
 				],
 				"attachSimplePort": 9229
 			}

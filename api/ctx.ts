@@ -1,4 +1,4 @@
-import { handleMysql } from "./mysql.ts";
+import { handleMysql, client } from "./mysql.ts";
 import { RouterContext, helpers } from "oak";
 import {
   docxWorker,
@@ -17,15 +17,25 @@ const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
 let currentContext: Awaited<ReturnType<typeof createContext>> | null;
 
 async function handleAuth(ctx: RouterContext<any>) {
-  const authToken = ctx.request.headers.get("authentication");
+  const authToken = ctx.request.headers.get("authorization");
 
-  if (!authToken) return { user: null, checkAuth: () => false };
+  if (!authToken)
+    return {
+      user: null,
+      checkAuth: (
+        _r: Partial<Record<RechtTyp | "admin", number | number[]>> = {}
+      ) => {
+        throw new Error("Du hast nicht die Rechte!");
+      },
+    };
 
   const userData = await check(authToken);
 
   return {
     user: userData,
-    checkAuth: (r: Partial<Record<RechtTyp, number | number[]>> = {}) => {
+    checkAuth: (
+      r: Partial<Record<RechtTyp | "admin", number | number[]>> = {}
+    ) => {
       return checkAuth(userData.rechte, r);
     },
   };
@@ -44,6 +54,7 @@ async function createContext(ctx: RouterContext<any>) {
     checkAuth,
     mailer,
     login,
+    mysql: client,
     worker: {
       docx: docxWorker,
       tnFile: tnFileWorker,
