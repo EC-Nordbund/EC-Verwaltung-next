@@ -1,20 +1,36 @@
-import { onScopeDispose, watch, ref, computed } from "vue";
+import { watch, ref, computed } from "vue";
 // import { useStorage } from "@vueuse/core";
 import apiLogin from "@api/auth/login.post";
-import {} from "jose";
+import { createNewEventSource } from "./sse";
+export { onInvalidate } from "./sse";
 
-const authToken = computed(() =>
+/**
+ * Aktuell gewähltes AuthToken
+ */
+export const authToken = computed(() =>
   tokenList.value && currentToken.value && tokenList.value[currentToken.value]
     ? tokenList.value[currentToken.value]
     : null
 );
 
+/**
+ * Aktuelle Nutzerdaten (mit simplen JWT-DATA parser)
+ */
 const userData = computed(() =>
   authToken.value ? JSON.parse(atob(authToken.value.split(".")[1])).user : null
 );
+/**
+ * Liste der Tokens die ein Nutzer hat
+ */
 const tokenList = ref<null | Record<string, string>>(null);
+/**
+ * Name des aktuellen Tokens
+ */
 const currentToken = ref<null | string>(null);
 
+/**
+ * Akteller Login Status 0 = LogedOut; 1 = LogedIn aber es muss gewählt werden als was man sich einloggt; 2 = logedIn
+ */
 const status = computed(() => {
   if (!tokenList.value) {
     return 0;
@@ -27,10 +43,16 @@ const status = computed(() => {
   return 2;
 });
 
+/**
+ * Auth Daten benutzen
+ *
+ * @returns Alles relevante zur authentifizierung
+ */
 export function useAuthData() {
   return { userData, status, tokenList, currentToken };
 }
 
+// Wenn das sich ändert sichern + neue eventsource (die lebt max 1 Stunde)
 watch([tokenList, currentToken], () => {
   localStorage.setItem(
     "@auth",
@@ -41,12 +63,16 @@ watch([tokenList, currentToken], () => {
   );
 });
 
+// Wenn in anderem Tab status wechselt
 window.addEventListener("storage", (ev) => {
   if (ev.key === "@auth") {
     tryRestoreSession();
   }
 });
 
+/**
+ * Versucht eine vorhandene Session in localstorage wiederherzustellen
+ */
 function tryRestoreSession() {
   const data = localStorage.getItem("@auth");
 
@@ -58,57 +84,6 @@ function tryRestoreSession() {
     tokenList.value = parsed.tokens;
     currentToken.value = parsed.current;
   }
-}
-
-const invalidationCb: Record<string, (() => void)[]> = {};
-
-export function onInvalidate(key: string[], cb: () => void) {
-  if (currentSource?.readyState === 2) {
-    createNewEventSource();
-  }
-
-  key.forEach((k) => {
-    if (invalidationCb[k]) {
-      invalidationCb[k].push(cb);
-    } else {
-      invalidationCb[k] = [cb];
-    }
-  });
-
-  onScopeDispose(() => {
-    key.forEach((k) => {
-      invalidationCb[k].splice(invalidationCb[k].indexOf(cb), 1);
-    });
-  });
-}
-
-let currentSource: EventSource | null = null;
-
-/**
- * Sollte normalerweise nur in core-tools benötigt werden
- *
- * @internal
- */
-export function createNewEventSource() {
-  if (currentSource) {
-    currentSource.close();
-    // Allow GC to collect EventSource
-    currentSource = null;
-  }
-
-  if (!authToken.value) return;
-
-  const source = new EventSource(
-    new URL("/_sse?authToken=" + authToken.value, __API_BASE_URL__)
-  );
-
-  source.addEventListener("invalidate", ((event: MessageEvent) => {
-    if (invalidationCb[event.data]) {
-      invalidationCb[event.data].forEach((cb) => cb());
-    }
-  }) as any);
-
-  currentSource = source;
 }
 
 /**
@@ -130,6 +105,9 @@ export function wrapFetchOptions(opts: RequestInit): RequestInit {
 // Wenn der authToken sich ändert muss eine neue Eventsource erzeugt werdern
 watch(authToken, createNewEventSource, { immediate: !!authToken.value });
 
+/**
+ * Login
+ */
 export async function login(username: string, password: string) {
   const tokens = await apiLogin({
     params: {},
@@ -149,4 +127,5 @@ export async function login(username: string, password: string) {
   return true;
 }
 
+// Versuche bei startup session wiederherzustellen
 tryRestoreSession();

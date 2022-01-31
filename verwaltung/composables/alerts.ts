@@ -1,3 +1,5 @@
+// TODO: change with implementation in vuetify!
+
 export function useAlert() {
   return {
     async alert(msg: string) {
