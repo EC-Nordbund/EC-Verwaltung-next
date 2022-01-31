@@ -1,5 +1,5 @@
 import { client } from "./mysql.ts";
-import { createTokenSet } from "./authTokens.ts";
+import { createTokenSet, Rechte } from "./authTokens.ts";
 const byteToHex: string[] = [];
 
 for (let n = 0; n <= 0xff; ++n) {
@@ -26,7 +26,10 @@ const __PEPPER__ = Deno.env.get("PEPPER") ?? "25r384o23ju4nhrf3uq";
 
 export async function login(username: string, password: string) {
   return await client.useConnection(async (con) => {
-    const data:
+    const data = (await con.query(
+      `SELECT * FROM user WHERE username = ? AND valid_until > NOW()`,
+      [username],
+    )) as
       | [
         {
           user_id: number;
@@ -39,10 +42,7 @@ export async function login(username: string, password: string) {
           is_admin: boolean;
         },
       ]
-      | [] = (await con.query(
-        `SELECT * FROM user WHERE username = ? AND valid_until > NOW()`,
-        [username],
-      )) as [any] | [];
+      | [];
 
     if (data.length === 0) {
       throw new Error("Benutzername oder Passwort sind falsch!");
@@ -54,15 +54,21 @@ export async function login(username: string, password: string) {
       throw new Error("Benutzername oder Passwort sind falsch!");
     }
 
-    const rechte: any[] = (
+    const rechte: Rechte[] = (
       (await con.query("SELECT * FROM user_rechte WHERE user_id = ?", [
         data[0].user_id,
-      ])) as any[]
-    ).map((v) => ({
-      type: v.recht,
-      id: v.recht_object_id,
-      name: v.recht_object_name,
-    }));
+      ])) as {
+        recht: string;
+        recht_object_id: number;
+        recht_object_name: string;
+      }[]
+    ).map(
+      (v) => ({
+        type: v.recht,
+        id: v.recht_object_id,
+        name: v.recht_object_name,
+      } as Rechte),
+    );
 
     if (data[0].is_admin) {
       rechte.push("admin");

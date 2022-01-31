@@ -26,7 +26,7 @@ interface JWTData extends Userdata {
   rechte: Rechte;
 }
 
-type Rechte =
+export type Rechte =
   | "admin"
   | { type: "leiter"; id: number; name: string }
   | { type: "fzVerantwortlicher"; id: number; name: string }

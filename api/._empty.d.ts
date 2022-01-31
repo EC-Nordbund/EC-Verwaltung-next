@@ -1,1 +1,1 @@
-export type QualifiedAttribute = any;
+export type QualifiedAttribute = Record<string, unknown>;

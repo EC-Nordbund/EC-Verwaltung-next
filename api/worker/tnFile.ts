@@ -1,4 +1,4 @@
-import fillFile from "xlsx";
+import fillFile, { primitiveObject } from "xlsx";
 import { expose } from "comlink";
 
 interface DATA {
@@ -6,7 +6,7 @@ interface DATA {
     title: string;
     content: string;
   }[];
-  data: any[];
+  data: primitiveObject[];
 }
 
 export const api = {

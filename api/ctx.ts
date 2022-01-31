@@ -12,11 +12,14 @@ import { login } from "./auth.ts";
 
 const mailer = mailWorker();
 
-const map = new WeakMap<RouterContext<any>, (() => void | Promise<void>)[]>();
+const map = new WeakMap<
+  RouterContext<string>,
+  (() => void | Promise<void>)[]
+>();
 
 let currentContext: Awaited<ReturnType<typeof createContext>> | null;
 
-async function handleAuth(ctx: RouterContext<any>) {
+async function handleAuth(ctx: RouterContext<string>) {
   const authToken = ctx.request.headers.get("authorization");
 
   if (!authToken) {
@@ -42,7 +45,7 @@ async function handleAuth(ctx: RouterContext<any>) {
   };
 }
 
-async function createContext(ctx: RouterContext<any>) {
+async function createContext(ctx: RouterContext<string>) {
   const { user, checkAuth } = await handleAuth(ctx);
 
   map.set(ctx, []);
@@ -75,16 +78,20 @@ export function getContext() {
   return currentContext;
 }
 
-function releaseContext(ctx: RouterContext<any>) {
+function releaseContext(ctx: RouterContext<string>) {
   if (map.has(ctx)) {
     map.get(ctx)!.forEach((cb) => cb());
   }
 }
 
 export function wrapper(
-  cb: (args?: { params?: any; query?: any; body?: any }) => Promise<any>,
+  cb: (args?: {
+    params?: unknown;
+    query?: unknown;
+    body?: unknown;
+  }) => Promise<unknown>,
 ) {
-  return async (ctx: RouterContext<any>) => {
+  return async (ctx: RouterContext<string>) => {
     await createContext(ctx);
     const pData = cb({
       params: ctx.params,
@@ -98,7 +105,7 @@ export function wrapper(
       ctx.response.headers.set("content-type", "application/json");
       ctx.response.status = 200;
       ctx.response.body = JSON.stringify(data);
-    } catch (ex: any) {
+    } catch (ex: unknown) {
       ctx.response.status = 500;
       ctx.response.body = (ex as Error).message;
     }
