@@ -27,7 +27,7 @@ const __PEPPER__ = Deno.env.get("PEPPER") ?? "25r384o23ju4nhrf3uq";
 export async function login(username: string, password: string) {
   return await client.useConnection(async (con) => {
     const data = (await con.query(
-      `SELECT * FROM user WHERE username = ? AND valid_until > NOW()`,
+      "SELECT * FROM user WHERE username = ? AND valid_until > NOW()",
       [username],
     )) as
       | [

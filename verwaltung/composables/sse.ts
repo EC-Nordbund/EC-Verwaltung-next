@@ -36,8 +36,7 @@ export function createNewEventSource() {
     currentSource = null;
   }
 
-  if (!authToken.value)
-    return;
+  if (!authToken.value) return;
 
   const source = new EventSource(
     new URL("/_sse?authToken=" + authToken.value, __API_BASE_URL__)
@@ -47,7 +46,7 @@ export function createNewEventSource() {
     if (invalidationCb[event.data]) {
       invalidationCb[event.data].forEach((cb) => cb());
     }
-  }) as any);
+  }) as (ev: Event) => void);
 
   currentSource = source;
 }

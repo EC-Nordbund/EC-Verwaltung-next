@@ -24,7 +24,7 @@ let imports = "";
 let calls = "";
 
 let code =
-  `/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n`;
+  "/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n";
 
 files.forEach((file, i) => {
   const [p, method] = file.split(".");

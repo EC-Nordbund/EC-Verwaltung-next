@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import loadUserList from '@api/admin/user.get'
-import type { User } from '@api/admin/user.get'
-import { ref } from 'vue'
-import { onInvalidate } from '@/composables/api'
-import { required } from '@/rules/requires'
+import loadUserList from "@api/admin/user.get";
+import type { User } from "@api/admin/user.get";
+import { ref } from "vue";
+import { onInvalidate } from "@/composables/api";
+import { required } from "@/rules/requires";
 
-import FormDialog from '@/components/FormDialog.vue'
+import FormDialog from "@/components/FormDialog.vue";
 
-const users = ref<User[]>([])
+const users = ref<User[]>([]);
 
 async function loadData() {
-  users.value = await loadUserList({ query: {}, body: {}, params: {} })
+  users.value = await loadUserList({ query: {}, body: {}, params: {} });
 }
-loadData()
+loadData();
 
-const showAddUserDalog = ref(false)
+const showAddUserDalog = ref(false);
 
-onInvalidate(['user'], () => loadData())
+onInvalidate(["user"], () => loadData());
 </script>
 <template lang="pug">
 v-container

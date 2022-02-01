@@ -8,7 +8,7 @@ export function useAlert() {
     async confirm(msg: string) {
       return confirm(msg);
     },
-    async prompt(msg: string, def: string = "") {
+    async prompt(msg: string, def = "") {
       return prompt(msg, def);
     },
   };
