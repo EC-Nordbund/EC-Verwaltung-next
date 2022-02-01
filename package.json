@@ -24,7 +24,7 @@
   "homepage": "https://github.com/EC-Nordbund/EC-Verwaltung-next#readme",
   "devDependencies": {
     "@vitejs/plugin-vue": "2.1.0",
-    "sass": "1.49.0",
+    "sass": "1.49.4",
     "typescript": "4.5.5",
     "unplugin-vue-components": "0.17.15",
     "vite": "2.7.13",
