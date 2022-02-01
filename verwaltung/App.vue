@@ -36,7 +36,7 @@ function logoutHandler() {
 const showPWD = ref(false);
 
 const accountDialog = ref(false);
-const drawer = ref<boolean | null>(null);
+const drawer = ref<boolean>();
 </script>
 <template lang="pug">
 v-app

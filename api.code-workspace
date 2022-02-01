@@ -45,7 +45,8 @@
 			"johnsoncodehk.volar",
 			"esbenp.prettier-vscode",
 			"syler.sass-indented",
-			"denoland.vscode-deno"
+			"denoland.vscode-deno",
+			"dbaeumer.vscode-eslint"
 		]
 	}
 }
