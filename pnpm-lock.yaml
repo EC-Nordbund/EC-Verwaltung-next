@@ -19,6 +19,7 @@ specifiers:
   vite-plugin-pages: 0.20.1
   vite-plugin-server: 0.1.2
   vue: 3.2.29
+  vue-eslint-parser: ^8.2.0
   vue-router: 4.0.12
   vue-tsc: 0.31.1
   vuetify: npm:@vuetify/nightly@3.0.0-next-20220128.0
@@ -46,6 +47,7 @@ devDependencies:
   vite-plugin-inspect: 0.3.13_vite@2.7.13
   vite-plugin-pages: 0.20.1_vite@2.7.13
   vite-plugin-server: 0.1.2_typescript@4.5.5
+  vue-eslint-parser: 8.2.0_eslint@8.8.0
   vue-tsc: 0.31.1_typescript@4.5.5
 
 packages:
