@@ -12,12 +12,25 @@
     "email": "app@ec-nordbund.de"
   },
   "scripts": {
-    "dev": "vite",
-    "lint": "eslint . --ext .ts,.vue,.js",
-    "fmt": "prettier .",
-    "build": "vite build",
-    "types": "vue-tsc -p ./verwaltung/tsconfig.json",
-    "routes": "node createRoutes.mjs"
+    "v:dev": "vite",
+    "v:build": "vite build",
+    "v:types": "vue-tsc -p ./verwaltung/tsconfig.json",
+    "v:lint": "eslint . --ext .ts,.vue,.js",
+    "v:lint:fix": "eslint . --ext .ts,.vue,.js --fix",
+    "v:fmt:check": "prettier . --check",
+    "v:fmt": "prettier . --write",
+    "a:dev": "deno run -A --importmap=./api/importmap.json ./api/mod.ts",
+    "a:build": "deno compile -A --importmap=./api/importmap.json ./api/mod.ts",
+    "a:fmt:check": "cd api && deno fmt --check",
+    "a:fmt": "cd api && deno fmt",
+    "a:lint": "deno lint",
+    "a:routes": "cd api && deno run -A ./createRoutes.ts",
+    "build": "pnpm v:build && pnpm a:build && pnpm v:types",
+    "fmt": "pnpm v:fmt && pnpm a:fmt",
+    "fmt:check": "pnpm v:fmt:check && pnpm a:fmt:check",
+    "lint": "pnpm v:lint && pnpm a:lint",
+    "lint:fix": "pnpm v:lint:fix && pnpm a:lint",
+    "types": "pnpm v:types"
   },
   "license": "GPL3",
   "bugs": {
