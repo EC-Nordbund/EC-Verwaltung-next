@@ -23,6 +23,7 @@ jobs:
         node-version: 16.x
         cache: 'pnpm'
     - run: pnpm i
-    - run: pnpm build
-    - run: pnpm lint
-    - run: pnpm prettier --check .
+    - run: pnpm v:build
+    - run: pnpm v:lint
+    - run: pnpm v:fmt:check
+    - run: pnpm v:types
