@@ -7,7 +7,7 @@ const build = __BUILD_ID__;
 
 const { status, currentToken, tokenList, userData } = useAuthData();
 
-const tokenNames = computed(() => Object.keys(tokenList.value!));
+const tokenNames = computed(() => Object.keys(tokenList.value ?? {}));
 
 const singleUser = computed(() => tokenNames.value.length === 0);
 
@@ -36,7 +36,7 @@ function logoutHandler() {
 const showPWD = ref(false);
 
 const accountDialog = ref(false);
-const drawer = ref<boolean>(null!);
+const drawer = ref<boolean | null>(null);
 </script>
 <template lang="pug">
 v-app

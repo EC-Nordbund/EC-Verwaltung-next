@@ -96,7 +96,7 @@ export function wrapFetchOptions(opts: RequestInit): RequestInit {
 
   // Add auth header
   if (authToken.value) {
-    (opts.headers! as Record<string, string>).authorization = authToken.value;
+    (opts?.headers as Record<string, string>).authorization = authToken.value;
   }
 
   return opts;

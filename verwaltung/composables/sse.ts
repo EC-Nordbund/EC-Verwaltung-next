@@ -46,7 +46,7 @@ export function createNewEventSource() {
     if (invalidationCb[event.data]) {
       invalidationCb[event.data].forEach((cb) => cb());
     }
-  }) as any);
+  }) as (ev: Event) => void);
 
   currentSource = source;
 }

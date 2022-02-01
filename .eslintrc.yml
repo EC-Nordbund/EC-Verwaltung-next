@@ -29,3 +29,11 @@ rules:
     - error
     - always
   vue/script-setup-uses-vars: error
+  # Needs investigation
+  "@typescript-eslint/no-unused-vars": off
+  vue/multi-word-component-names:
+    - error
+    - ignores:
+        - index
+globals:
+  __BUILD_ID__: readonly
