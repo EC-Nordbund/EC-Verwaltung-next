@@ -11,5 +11,7 @@ export default async ({
 
   const res = await ctx.login(options.username, options.password);
 
+  ctx.track('login');
+
   return res;
 };

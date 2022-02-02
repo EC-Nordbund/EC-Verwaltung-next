@@ -48,8 +48,7 @@ export default async (opts: {
   });
 
   ctx.invalidate('user');
-
-  console.log(res);
+  ctx.track('user:add', opts.body.username);
 
   return res.lastInsertId!;
 };

@@ -53,6 +53,11 @@ async function createContext(ctx: RouterContext<string>) {
   map.set(ctx, []);
 
   const ecCtx = {
+    track: (name: string, data?: unknown) => {
+      const user = ecCtx.user?.username ?? 'N/A';
+
+      console.info(user, name, JSON.stringify(data ?? 'N/A'));
+    },
     gotenberg,
     user,
     __PEPPER__,

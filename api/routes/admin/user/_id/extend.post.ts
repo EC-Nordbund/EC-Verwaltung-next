@@ -19,6 +19,7 @@ export default async (opts: {
 
   ctx.invalidate('user');
   ctx.invalidate(`user:${opts.params.id}`);
+  ctx.track(`user:${opts.params.id}:extend`, newDate.toISOString());
 
   return true;
 };

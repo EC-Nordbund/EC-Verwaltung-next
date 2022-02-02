@@ -43,6 +43,7 @@ export function createNewEventSource() {
   );
 
   source.addEventListener('invalidate', ((event: MessageEvent) => {
+    console.info('invalidate', event.data);
     if (invalidationCb[event.data]) {
       invalidationCb[event.data].forEach(cb => cb());
     }
