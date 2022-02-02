@@ -2,6 +2,8 @@
 import { useAuthData, login } from './composables/api';
 import { ref, computed } from 'vue';
 import { useStorage } from '@vueuse/core';
+import FormDialog from '@/components/FormDialog.vue';
+import pwdUpdate from '@api/auth/pwdchange.post';
 
 const build = __BUILD_ID__;
 
@@ -30,6 +32,21 @@ async function loginHandler() {
 function logoutHandler() {
   currentToken.value = null;
   tokenList.value = null;
+}
+const oldPWD = ref('');
+const newPWDA = ref('');
+const newPWDB = ref('');
+
+function changePwd() {
+  if (newPWDA.value !== newPWDB.value) return;
+  if (newPWDA.value.length < 8) return;
+
+  pwdUpdate({
+    body: {
+      password: newPWDA.value,
+      oldPassword: oldPWD.value
+    }
+  });
 }
 </script>
 <template lang="pug">
@@ -66,6 +83,15 @@ v-app
 
   template(v-if="status === 2")
     v-navigation-drawer(app v-model="drawer")
+      div
+        FormDialog(title="Passwort ändern" @save="changePwd")
+          template(v-slot:activator="{ props }")
+            v-btn(icon v-bind="props")
+              v-icon mdi-clock-check-outline
+          v-text-field(label="Altes Passwort" v-model="oldPWD")
+          v-text-field(label="Neues Passwort" v-model="newPWDA")
+          v-text-field(label="Neues Passwort" v-model="newPWDB")
+
       v-list(v-if="userData.rechte === 'admin'")
         v-list-subheader Personen
         v-list-item(to="/personen/liste")

@@ -16,6 +16,7 @@ const publicKey = await importSPKI(
 );
 
 interface Userdata {
+  user_id: number;
   username: string;
   validUntil: string;
 

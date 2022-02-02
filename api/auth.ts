@@ -80,6 +80,7 @@ export async function login(username: string, password: string) {
         email: data[0].email,
         validUntil: data[0].valid_until.toISOString().split('T')[0],
         name: data[0].name,
+        user_id: data[0].user_id,
       },
       rechte,
     );
