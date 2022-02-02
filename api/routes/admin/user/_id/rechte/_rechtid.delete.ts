@@ -15,7 +15,7 @@ export default async (opts: {
     [user_id, recht_id],
   );
 
-  ctx.invalidate(`user:${user_id}`)
+  ctx.invalidate(`user:${user_id}`);
 
   return (res?.affectedRows || 0) > 0;
 };
