@@ -87,7 +87,7 @@ v-app
         FormDialog(title="Passwort ändern" @save="changePwd")
           template(v-slot:activator="{ props }")
             v-btn(icon v-bind="props")
-              v-icon mdi-clock-check-outline
+              v-icon mdi-lock-reset
           v-text-field(label="Altes Passwort" v-model="oldPWD")
           v-text-field(label="Neues Passwort" v-model="newPWDA")
           v-text-field(label="Neues Passwort" v-model="newPWDB")
