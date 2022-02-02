@@ -8,6 +8,7 @@ import EcLoader from '@/components/EcLoader.vue';
 import { toDateFormat } from '@/composables/date';
 import { ref } from 'vue';
 import extendUserValid from '@api/admin/user/_id/extend.post';
+import deleteRechtAPI from '@api/admin/user/_id/rechte/_rechtid.delete';
 
 const route = useRoute();
 
@@ -40,6 +41,15 @@ function deleteUser() {
     .split('T')[0];
   extend();
 }
+
+function deleteRecht(id: number) {
+  deleteRechtAPI({
+    params: {
+      id: route.params.id as string,
+      rechtid: id.toString()
+    }
+  });
+}
 </script>
 <template lang="pug">
 v-container(fluid)
@@ -68,4 +78,8 @@ v-container(fluid)
     v-list
       v-list-item(v-for="recht in user.rechte" :key="recht.user_rechte_id" @click="")
         v-list-item-title {{ recht.recht }} für {{ recht.recht_object_name }} (ID: {{ recht.recht_object_id }})
+        template(v-slot:append)
+          v-list-item-avatar(right)
+            v-btn(icon variant="text" @click="deleteRecht(recht.user_rechte_id)")
+              v-icon mdi-delete
 </template>
