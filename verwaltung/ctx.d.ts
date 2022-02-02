@@ -11,7 +11,7 @@ export interface ctx {
   login: (u: string, p: string) => Record<string, string>;
   hash: (d: string) => Promise<string>;
   mysql: {
-    query: (sql: string, args: any[]) => Promise<any>
+    query: (sql: string, args: any[]) => Promise<any>;
     useConnection: <T>(
       cb: (con: {
         query: (sql: string, args: any[]) => Promise<any>;
