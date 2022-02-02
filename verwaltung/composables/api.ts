@@ -1,8 +1,8 @@
-import { watch, ref, computed } from "vue";
+import { watch, ref, computed } from 'vue';
 // import { useStorage } from "@vueuse/core";
-import apiLogin from "@api/auth/login.post";
-import { createNewEventSource } from "./sse";
-export { onInvalidate } from "./sse";
+import apiLogin from '@api/auth/login.post';
+import { createNewEventSource } from './sse';
+export { onInvalidate } from './sse';
 
 /**
  * Aktuell gewähltes AuthToken
@@ -17,7 +17,7 @@ export const authToken = computed(() =>
  * Aktuelle Nutzerdaten (mit simplen JWT-DATA parser)
  */
 const userData = computed(() =>
-  authToken.value ? JSON.parse(atob(authToken.value.split(".")[1])).user : null
+  authToken.value ? JSON.parse(atob(authToken.value.split('.')[1])).user : null
 );
 /**
  * Liste der Tokens die ein Nutzer hat
@@ -55,17 +55,17 @@ export function useAuthData() {
 // Wenn das sich ändert sichern + neue eventsource (die lebt max 1 Stunde)
 watch([tokenList, currentToken], () => {
   localStorage.setItem(
-    "@auth",
+    '@auth',
     JSON.stringify({
       tokens: tokenList.value,
-      current: currentToken.value,
+      current: currentToken.value
     })
   );
 });
 
 // Wenn in anderem Tab status wechselt
-window.addEventListener("storage", (ev) => {
-  if (ev.key === "@auth") {
+window.addEventListener('storage', ev => {
+  if (ev.key === '@auth') {
     tryRestoreSession();
   }
 });
@@ -74,13 +74,13 @@ window.addEventListener("storage", (ev) => {
  * Versucht eine vorhandene Session in localstorage wiederherzustellen
  */
 function tryRestoreSession() {
-  const data = localStorage.getItem("@auth");
+  const data = localStorage.getItem('@auth');
 
   if (!data) return;
 
   const parsed = JSON.parse(data);
 
-  if ("tokens" in parsed && "current" in parsed) {
+  if ('tokens' in parsed && 'current' in parsed) {
     tokenList.value = parsed.tokens;
     currentToken.value = parsed.current;
   }
@@ -112,7 +112,7 @@ export async function login(username: string, password: string) {
   const tokens = await apiLogin({
     params: {},
     body: { username, password },
-    query: {},
+    query: {}
   });
 
   tokenList.value = tokens;

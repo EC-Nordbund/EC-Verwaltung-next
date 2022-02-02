@@ -1,4 +1,4 @@
-import { getContext } from "@ctx";
+import { getContext } from '@ctx';
 
 export default async ({
   body: options,
@@ -6,10 +6,10 @@ export default async ({
   params: Record<never, never>;
   query: Record<never, never>;
   body: { username: string; password: string };
-}) => {
+}): Promise<Record<string, string>> => {
   const ctx = getContext();
 
   const res = await ctx.login(options.username, options.password);
 
-  return res as Record<string, string>;
+  return res;
 };

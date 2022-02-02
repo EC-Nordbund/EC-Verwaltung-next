@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
     "paths": {
-      "@types/*": ["../types/*"],
+      "@types": ["../types/types.ts"],
       "@api/*": ["../api/routes/*"],
       "@/*": ["./*"]
     }

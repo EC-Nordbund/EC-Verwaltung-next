@@ -1,27 +1,26 @@
 <script setup lang="ts">
-import { useAuthData, login } from "./composables/api";
-import { ref, computed } from "vue";
-import { useStorage } from "@vueuse/core";
+import { useAuthData, login } from './composables/api';
+import { ref, computed } from 'vue';
+import { useStorage } from '@vueuse/core';
 
 const build = __BUILD_ID__;
 
 const { status, currentToken, tokenList, userData } = useAuthData();
-
 const tokenNames = computed(() => Object.keys(tokenList.value ?? {}));
-
 const singleUser = computed(() => tokenNames.value.length === 0);
-
-const username = useStorage("username", "");
-const password = ref("");
-
+const username = useStorage('username', '');
+const password = ref('');
 const loading = ref(false);
+const showPWD = ref(false);
+const accountDialog = ref(false);
+const drawer = ref<boolean>();
 
 async function loginHandler() {
   try {
     loading.value = true;
     await login(username.value, password.value);
     loading.value = false;
-    password.value = "";
+    password.value = '';
   } catch (ex) {
     alert(ex);
     loading.value = false;
@@ -32,11 +31,6 @@ function logoutHandler() {
   currentToken.value = null;
   tokenList.value = null;
 }
-
-const showPWD = ref(false);
-
-const accountDialog = ref(false);
-const drawer = ref<boolean>();
 </script>
 <template lang="pug">
 v-app

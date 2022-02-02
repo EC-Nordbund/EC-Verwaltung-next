@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useAlert } from "@/composables/alerts";
+import { ref } from 'vue';
+import { useAlert } from '@/composables/alerts';
 
 const showDialog = ref(false);
 
@@ -9,7 +9,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: "save"): void;
+  (event: 'save'): void;
 }>();
 
 const valid = ref<boolean>(false);
@@ -17,11 +17,13 @@ const valid = ref<boolean>(false);
 const a = useAlert();
 
 function save() {
-  if (valid.value) {
+  // Benötigt solange rules noch nicht korrekt funktioniert
+  // eslint-disable-next-line no-constant-condition
+  if (true || valid.value) {
     showDialog.value = false;
-    emit("save");
+    emit('save');
   } else {
-    a.alert("Du kannst die Daten in diesem Stadium nicht speichern!");
+    a.alert('Du kannst die Daten in diesem Stadium nicht speichern!');
   }
 }
 </script>

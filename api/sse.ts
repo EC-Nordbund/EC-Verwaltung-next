@@ -1,10 +1,10 @@
-import { Router, ServerSentEvent, ServerSentEventTarget } from "oak";
-import { helpers } from "oak";
-import { check } from "./authTokens.ts";
+import { Router, ServerSentEvent, ServerSentEventTarget } from 'oak';
+import { helpers } from 'oak';
+import { check } from './authTokens.ts';
 
 export const targets: ServerSentEventTarget[] = [];
 export function setupSSE(router: Router) {
-  router.get("/_sse", async (ctx) => {
+  router.get('/_sse', async (ctx) => {
     const target = ctx.sendEvents();
 
     const auth = helpers.getQuery(ctx).authToken;
@@ -20,7 +20,7 @@ export function setupSSE(router: Router) {
       target.close();
     }, 1000 * 60 * 60); // max 1 Stunde alive!
 
-    target.addEventListener("close", () => {
+    target.addEventListener('close', () => {
       clearTimeout(to);
       targets.splice(targets.indexOf(target), 1);
     });
@@ -32,5 +32,5 @@ export function sendData(ev: ServerSentEvent) {
 }
 
 export function invalidate(key: string) {
-  sendData(new ServerSentEvent("invalidate", key));
+  sendData(new ServerSentEvent('invalidate', key));
 }

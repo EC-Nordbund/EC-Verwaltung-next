@@ -10,11 +10,11 @@ extends:
 parser: vue-eslint-parser
 parserOptions:
   ecmaVersion: latest
-  parser: "@typescript-eslint/parser"
+  parser: '@typescript-eslint/parser'
   sourceType: module
 plugins:
   - vue
-  - "@typescript-eslint"
+  - '@typescript-eslint'
 rules:
   indent:
     - error
@@ -23,13 +23,13 @@ rules:
     - off
   quotes:
     - error
-    - double
+    - single
   semi:
     - error
     - always
   vue/script-setup-uses-vars: error
   # Needs investigation
-  "@typescript-eslint/no-unused-vars": off
+  '@typescript-eslint/no-unused-vars': off
   vue/multi-word-component-names:
     - error
     - ignores:

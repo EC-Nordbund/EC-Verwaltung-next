@@ -6,34 +6,34 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
 
   for (const file of files) {
     if (file.isDirectory) {
-      arrayOfFiles = getAllFiles(dirPath + "/" + file.name, arrayOfFiles);
+      arrayOfFiles = getAllFiles(dirPath + '/' + file.name, arrayOfFiles);
     } else {
-      arrayOfFiles.push(dirPath + "/" + file.name);
+      arrayOfFiles.push(dirPath + '/' + file.name);
     }
   }
 
   return arrayOfFiles;
 }
 
-const files = getAllFiles("./routes")
-  .map((v) => v.split(/\\|\//).join("/"))
-  .map((v) => v.split("/routes/")[1])
+const files = getAllFiles('./routes')
+  .map((v) => v.split(/\\|\//).join('/'))
+  .map((v) => v.split('/routes/')[1])
   .filter(Boolean);
 
-let imports = "";
-let calls = "";
+let imports = '';
+let calls = '';
 
 let code =
-  "/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from './ctx.ts';\nimport { Router } from 'oak'\n";
+  '/* GENERATED FILE DO NOT CHANGE OR COMMIT */\nimport { wrapper } from \'./ctx.ts\';\nimport { Router } from \'oak\'\n';
 
 files.forEach((file, i) => {
-  const [p, method] = file.split(".");
+  const [p, method] = file.split('.');
 
-  const fullPath = "/" +
+  const fullPath = '/' +
     p
-      .split("/")
-      .map((v) => (v[0] !== "_" ? v : ":" + v.slice(1)))
-      .join("/"); //.slice('/api'.length);
+      .split('/')
+      .map((v) => (v[0] !== '_' ? v : ':' + v.slice(1)))
+      .join('/'); //.slice('/api'.length);
 
   imports += `import route_${i} from './routes/${file}'\n`;
 
@@ -47,4 +47,4 @@ files.forEach((file, i) => {
 code += imports;
 code += `export default (router: Router) => {\n${calls}};\n`;
 
-Deno.writeTextFileSync("./.routes.ts", code);
+Deno.writeTextFileSync('./.routes.ts', code);

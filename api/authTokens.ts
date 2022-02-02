@@ -1,16 +1,17 @@
-import { importPKCS8, importSPKI, jwtVerify, SignJWT } from "jose";
+import { importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
+import { RechtTyp } from '@types';
 
-const __ALG__ = "RS512";
+const __ALG__ = 'RS512';
 
 const privateKey = await importPKCS8(
   await Deno.readTextFile(
-    new URL("./files/private_unencrypted.pem", import.meta.url),
+    new URL('./files/private_unencrypted.pem', import.meta.url),
   ),
   __ALG__,
 );
 
 const publicKey = await importSPKI(
-  await Deno.readTextFile(new URL("./files/public.pem", import.meta.url)),
+  await Deno.readTextFile(new URL('./files/public.pem', import.meta.url)),
   __ALG__,
 );
 
@@ -27,41 +28,39 @@ interface JWTData extends Userdata {
 }
 
 export type Rechte =
-  | "admin"
-  | { type: "leiter"; id: number; name: string }
-  | { type: "fzVerantwortlicher"; id: number; name: string }
-  | { type: "websiteOrt"; id: number; name: string };
+  | 'admin'
+  | { type: 'leiter'; id: number; name: string }
+  | { type: 'fzVerantwortlicher'; id: number; name: string }
+  | { type: 'websiteOrt'; id: number; name: string };
 
 export async function check(key: string): Promise<JWTData> {
   const ret = await jwtVerify(key, publicKey, {
     algorithms: [__ALG__],
-    issuer: ["ec"],
+    issuer: ['ec'],
     clockTolerance: 0,
   });
 
   return ret.payload.user as JWTData;
 }
 
-export type RechtTyp = "leiter" | "fzVerantwortlicher" | "websiteOrt";
-
 export function checkAuth(
   r: Rechte,
-  allowed: Partial<Record<RechtTyp | "admin", number[] | number>>,
+  allowed: Partial<Record<RechtTyp | 'admin', number[] | number>>,
 ) {
-  if (r === "admin") return true;
+  if (r === 'admin') return true;
 
   const rr = allowed[r.type];
 
-  if (!rr) throw new Error("Du hast nicht die benötigten Rechte!");
+  if (!rr) throw new Error('Du hast nicht die benötigten Rechte!');
 
-  if (typeof rr === "number") {
-    if (rr === r.id) throw new Error("Du hast nicht die benötigten Rechte!");
+  if (typeof rr === 'number') {
+    if (rr === r.id) throw new Error('Du hast nicht die benötigten Rechte!');
 
     return true;
   }
 
   if (!rr.includes(r.id)) {
-    throw new Error("Du hast nicht die benötigten Rechte!");
+    throw new Error('Du hast nicht die benötigten Rechte!');
   }
 
   return true;
@@ -77,9 +76,9 @@ async function generateJWT(user: Userdata, rechte: Rechte) {
     .setProtectedHeader({
       alg: __ALG__,
     })
-    .setIssuer("ec")
+    .setIssuer('ec')
     .setIssuedAt()
-    .setExpirationTime("6 hours")
+    .setExpirationTime('6 hours')
     .sign(privateKey, {});
 
   return jwt;
@@ -93,20 +92,20 @@ export async function createTokenSet(user: Userdata, rechte: Rechte[]) {
 
     const recht = rechte[i];
 
-    let str = "";
+    let str = '';
 
-    if (recht === "admin") {
-      str = "Administrator";
+    if (recht === 'admin') {
+      str = 'Administrator';
     } else {
       switch (recht.type) {
-        case "leiter":
+        case 'leiter':
           str = `Leiter (${recht.name})`;
 
           break;
-        case "fzVerantwortlicher":
+        case 'fzVerantwortlicher':
           str = `FZ für Ort ${recht.name}`;
           break;
-        case "websiteOrt":
+        case 'websiteOrt':
           str = `Website für Ort ${recht.name}`;
           break;
         default:
