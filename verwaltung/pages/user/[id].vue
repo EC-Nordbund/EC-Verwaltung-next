@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import loadUserApi from '@api/admin/user/_id.get';
+import FormDialog from '@/components/FormDialog.vue';
+import loadUser from '@api/admin/user/_id.get';
 import { onInvalidate } from '@/composables/api';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useDataReload } from '@/composables/reloadableData';
 import EcLoader from '@/components/EcLoader.vue';
 import { toDateFormat } from '@/composables/date';
+import { ref } from 'vue';
+import extendUserValid from '@api/admin/user/_id/extend.post';
 
 const route = useRoute();
 
@@ -15,13 +18,28 @@ const {
   error,
   nav
 } = useDataReload(() =>
-  loadUserApi({
+  loadUser({
     params: { id: route.params.id as string }
   })
 );
 
 onInvalidate([`user:${route.params.id}`], () => reload());
 onBeforeRouteUpdate(nav);
+
+const valid_until_date = ref<string>();
+function extend() {
+  return extendUserValid({
+    params: { id: route.params.id as string },
+    body: valid_until_date.value ? { valid: valid_until_date.value } : {}
+  });
+}
+
+function deleteUser() {
+  valid_until_date.value = new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split('T')[0];
+  extend();
+}
 </script>
 <template lang="pug">
 v-container(fluid)
@@ -35,7 +53,18 @@ v-container(fluid)
     p Benutzer freigeschaltet bis: {{ toDateFormat(user.user.valid_until) }}
     p Benutzer ist {{ user.user.is_admin ? '' : 'kein' }} Administrator
     p E-Mail: {{user.user.email}}
-    //- p {{ user }}
+
+    FormDialog(title="Benutzer hinzufügen" @save="extend")
+      template(v-slot:activator="{ props }")
+        v-btn(icon v-bind="props")
+          v-icon mdi-clock-check-outline
+      p Gibst du kein Datum an wird automatisch auf 100 Tage von jetzt gesetzt. Bitte Format YYYY-MM-DD benutzen!
+      v-text-field(label="Datum" v-model="valid_until_date")
+
+    v-btn(icon @click="deleteUser")
+      v-icon mdi-delete
+      
+
     v-list
       v-list-item(v-for="recht in user.rechte" :key="recht.user_rechte_id" @click="")
         v-list-item-title {{ recht.recht }} für {{ recht.recht_object_name }} (ID: {{ recht.recht_object_id }})
