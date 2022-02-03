@@ -1,5 +1,5 @@
-import fillFile, { primitiveObject } from "xlsx";
-import { expose } from "comlink";
+import fillFile, { primitiveObject } from 'xlsx';
+import { expose } from 'comlink';
 
 interface DATA {
   fields: {
@@ -11,7 +11,7 @@ interface DATA {
 
 export const api = {
   generate: (data: DATA) => {
-    const file = Deno.readFileSync("./tnListe.xlsx");
+    const file = Deno.readFileSync('./tnListe.xlsx');
     const prepared = fillFile(file, 1, {
       fields: data.fields.map((v) => ({
         title: v.title,

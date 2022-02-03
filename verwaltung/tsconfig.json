@@ -10,13 +10,15 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "noEmit": true,
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
     "paths": {
-      "@types/*": ["../types/*"],
+      "@types": ["../types/types.ts"],
       "@api/*": ["../api/routes/*"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@ctx": ["./ctx.d.ts"]
     }
   },
   "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx", "./**/*.vue"]

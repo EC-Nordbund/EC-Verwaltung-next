@@ -1,7 +1,7 @@
 trailingComma: none
 tabWidth: 2
 semi: true
-singleQuote: false
-quote-props: as-needed
-bracket-same-line: true
-arrow-parens: avoid
+singleQuote: true
+quoteProps: as-needed
+bracketSameLine: true
+arrowParens: avoid

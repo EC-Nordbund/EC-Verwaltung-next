@@ -1,14 +1,14 @@
-import { SendConfig, SmtpClient } from "denomailer";
+import { SendConfig, SmtpClient } from 'denomailer';
 
 const client = new SmtpClient({
-  console_debug: Deno.env.get("DEBUG") === "on",
+  console_debug: Deno.env.get('DEBUG') === 'on',
 });
 
 await client.connect({
-  hostname: Deno.env.get("SMTP_HOST")!,
-  port: parseInt(Deno.env.get("SMTP_PORT") ?? "25"),
-  username: Deno.env.get("SMTP_USER"),
-  password: Deno.env.get("SMTP_PWD"),
+  hostname: Deno.env.get('SMTP_HOST')!,
+  port: parseInt(Deno.env.get('SMTP_PORT') ?? '25'),
+  username: Deno.env.get('SMTP_USER'),
+  password: Deno.env.get('SMTP_PWD'),
 });
 
 const que: {
@@ -23,7 +23,7 @@ function add(config: SendConfig) {
   });
 }
 
-import { expose } from "comlink";
+import { expose } from 'comlink';
 
 export const api = {
   sendMail: add,

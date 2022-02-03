@@ -1,37 +1,55 @@
 <script setup lang="ts">
-import loadUserList from "@api/admin/user.get";
-import type { User } from "@api/admin/user.get";
-import { ref } from "vue";
-import { onInvalidate } from "@/composables/api";
-import { required } from "@/rules/requires";
+import loadUserList from '@api/admin/user.get';
+import { reactive, toRaw } from 'vue';
+import { onInvalidate } from '@/composables/api';
+import { required } from '@/rules/requires';
+import FormDialog from '@/components/FormDialog.vue';
+import { useDataReload } from '@/composables/reloadableData';
+import addUser from '@api/admin/user/add.post';
+import EcLoader from '@/components/EcLoader.vue';
 
-import FormDialog from "@/components/FormDialog.vue";
+const {
+  data: users,
+  reload,
+  loading,
+  error
+} = useDataReload(() => loadUserList(), []);
 
-const users = ref<User[]>([]);
+const newUserData = reactive({
+  username: '',
+  name: '',
+  email: '',
+  is_admin: false
+});
 
-async function loadData() {
-  users.value = await loadUserList({ query: {}, body: {}, params: {} });
+function saveNewUser() {
+  addUser({
+    body: toRaw(newUserData)
+  });
 }
-loadData();
 
-const showAddUserDalog = ref(false);
-
-onInvalidate(["user"], () => loadData());
+onInvalidate(['user'], reload);
 </script>
 <template lang="pug">
-v-container
-  h2 Benutzerverwaltung
-  v-list
-    v-list-item(v-for="user in users" :key="user.user_id" :to="'/user/' + user.user_id")
-      v-list-item-title {{ user.name }} ({{ user.username }})
-        template(v-if="user.is_admin") &nbsp;- ADMIN
-  FormDialog(title="Benutzer hinzufügen")
-    template(v-slot:activator="{ props }")
-      v-btn(icon v-bind="props")
-        v-icon mdi-plus
-    p Der angelegte Benutzer bekommt automatisch eine E-Mail!
-    v-text-field(label="Username" :rules="[required('Username')]")
-    v-text-field(label="Name" :rules="[required('Name')]")
-    v-text-field(label="E-Mail" :rules="[required('E-Mail')]")
-    v-checkbox(label="Administrator")
+v-container(fluid)
+  template(v-if="loading")
+    EcLoader(size="50px")
+  template(v-else-if="error")
+    p Ein fehler beim laden ist aufgetreten: {{error}}
+    v-btn(@click="reload") Nochmal versuchen
+  template(v-else)
+    h2 Benutzerverwaltung
+    v-list
+      v-list-item(v-for="user in users" :key="user.user_id" :to="'/user/' + user.user_id")
+        v-list-item-title {{ user.name }} ({{ user.username }})
+          template(v-if="user.is_admin") &nbsp;- ADMIN
+    FormDialog(title="Benutzer hinzufügen" @save="saveNewUser")
+      template(v-slot:activator="{ props }")
+        v-btn(icon v-bind="props")
+          v-icon mdi-plus
+      p Der angelegte Benutzer bekommt automatisch eine E-Mail!
+      v-text-field(label="Username" :rules="[required('Username')]" v-model="newUserData.username")
+      v-text-field(label="Name" :rules="[required('Name')]" v-model="newUserData.name")
+      v-text-field(label="E-Mail" :rules="[required('E-Mail')]" v-model="newUserData.email")
+      v-checkbox(label="Administrator" v-model="newUserData.is_admin")
 </template>

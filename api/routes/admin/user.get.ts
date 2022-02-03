@@ -1,29 +1,12 @@
-import { getContext } from "@ctx";
+import { getContext } from '@ctx';
+import type { User } from '@types';
 
-export interface User {
-  user_id: number;
-  username: string;
-  name: string;
-  valid_until: Date;
-  is_admin: boolean;
-}
-
-export default async (_opts: {
-  params: Record<never, never>;
-  query: Record<never, never>;
-  body: Record<never, never>;
-}) => {
+export default (): Promise<User[]> => {
   const ctx = getContext();
 
-  ctx.checkAuth({
-    admin: 0,
-  });
+  ctx.checkAuth();
 
-  const res = (await ctx.mysql.query(
-    "SELECT user_id, username, name, valid_until, is_admin FROM user",
-  )) as User[];
-
-  // const res = await ctx.login(options.username, options.password);
-
-  return res;
+  return ctx.mysql.query(
+    'SELECT user_id, username, name, valid_until, is_admin FROM user',
+  );
 };

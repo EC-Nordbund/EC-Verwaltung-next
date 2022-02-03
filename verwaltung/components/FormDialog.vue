@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useAlert } from "@/composables/alerts";
+import { ref } from 'vue';
+import { useAlert } from '@/composables/alerts';
 
 const showDialog = ref(false);
 
@@ -9,7 +9,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: "save"): void;
+  (event: 'save'): void;
 }>();
 
 const valid = ref<boolean>(false);
@@ -17,11 +17,13 @@ const valid = ref<boolean>(false);
 const a = useAlert();
 
 function save() {
-  if (valid.value) {
+  // Benötigt solange rules noch nicht korrekt funktioniert
+  // eslint-disable-next-line no-constant-condition
+  if (true || valid.value) {
     showDialog.value = false;
-    emit("save");
+    emit('save');
   } else {
-    a.alert("Du kannst die Daten in diesem Stadium nicht speichern!");
+    a.alert('Du kannst die Daten in diesem Stadium nicht speichern!');
   }
 }
 </script>
@@ -35,7 +37,9 @@ v-dialog(fullscreen v-model="showDialog")
     v-app-bar(color="primary")
       v-app-bar-title {{ props.title }}
       v-spacer
+      slot(name="actionsPrepend")
       v-btn(@click="save") Speichern
+      slot(name="actionsAppend")
       v-btn(icon @click="showDialog = false")
         v-icon mdi-close
     //- Current workaround as v-toolbar currently doesn't exist!

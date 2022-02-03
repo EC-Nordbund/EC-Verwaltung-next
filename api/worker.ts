@@ -1,9 +1,9 @@
-import type { api as docx_api } from "./worker/docx.ts";
-import type { api as tn_file_api } from "./worker/tnFile.ts";
-import type { api as zuschuesse_api } from "./worker/zuschuesse.ts";
-import type { api as mailer_api } from "./worker/mailer.ts";
+import type { api as docx_api } from './worker/docx.ts';
+import type { api as tn_file_api } from './worker/tnFile.ts';
+import type { api as zuschuesse_api } from './worker/zuschuesse.ts';
+import type { api as mailer_api } from './worker/mailer.ts';
 
-import { wrap } from "comlink";
+import { wrap } from 'comlink';
 
 let idCounter = 0;
 
@@ -19,8 +19,8 @@ const registry = new FinalizationRegistry((id: number) => {
 });
 
 export function docxWorker() {
-  const worker = new Worker(new URL("./worker/docx.ts", import.meta.url), {
-    type: "module",
+  const worker = new Worker(new URL('./worker/docx.ts', import.meta.url), {
+    type: 'module',
     deno: {
       // Dieser darf nicht auf DENO zugreifen damit können wir belibige templates laufen lassen da alles isoliert ist!
       namespace: false,
@@ -38,8 +38,8 @@ export function docxWorker() {
 }
 
 export function tnFileWorker() {
-  const worker = new Worker(new URL("./worker/tnFile.ts", import.meta.url), {
-    type: "module",
+  const worker = new Worker(new URL('./worker/tnFile.ts', import.meta.url), {
+    type: 'module',
     deno: {
       namespace: true,
     },
@@ -57,9 +57,9 @@ export function tnFileWorker() {
 
 export function zuschuesseWorker() {
   const worker = new Worker(
-    new URL("./worker/zuschuesse.ts", import.meta.url),
+    new URL('./worker/zuschuesse.ts', import.meta.url),
     {
-      type: "module",
+      type: 'module',
       deno: {
         namespace: true,
       },
@@ -77,8 +77,8 @@ export function zuschuesseWorker() {
 }
 
 export function mailWorker() {
-  const worker = new Worker(new URL("./worker/mailer.ts", import.meta.url), {
-    type: "module",
+  const worker = new Worker(new URL('./worker/mailer.ts', import.meta.url), {
+    type: 'module',
     deno: {
       namespace: true,
     },

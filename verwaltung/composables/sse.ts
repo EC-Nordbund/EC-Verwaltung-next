@@ -1,5 +1,5 @@
-import { onScopeDispose } from "vue";
-import { authToken } from "./api";
+import { onScopeDispose } from 'vue';
+import { authToken } from './api';
 
 const invalidationCb: Record<string, (() => void)[]> = {};
 
@@ -8,7 +8,7 @@ export function onInvalidate(key: string[], cb: () => void) {
     createNewEventSource();
   }
 
-  key.forEach((k) => {
+  key.forEach(k => {
     if (invalidationCb[k]) {
       invalidationCb[k].push(cb);
     } else {
@@ -17,7 +17,7 @@ export function onInvalidate(key: string[], cb: () => void) {
   });
 
   onScopeDispose(() => {
-    key.forEach((k) => {
+    key.forEach(k => {
       invalidationCb[k].splice(invalidationCb[k].indexOf(cb), 1);
     });
   });
@@ -39,12 +39,13 @@ export function createNewEventSource() {
   if (!authToken.value) return;
 
   const source = new EventSource(
-    new URL("/_sse?authToken=" + authToken.value, __API_BASE_URL__)
+    new URL('/_sse?authToken=' + authToken.value, __API_BASE_URL__)
   );
 
-  source.addEventListener("invalidate", ((event: MessageEvent) => {
+  source.addEventListener('invalidate', ((event: MessageEvent) => {
+    console.info('invalidate', event.data);
     if (invalidationCb[event.data]) {
-      invalidationCb[event.data].forEach((cb) => cb());
+      invalidationCb[event.data].forEach(cb => cb());
     }
   }) as (ev: Event) => void);
 

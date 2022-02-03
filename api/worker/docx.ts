@@ -1,5 +1,5 @@
-import { createReport } from "docx-templates";
-import { expose } from "comlink";
+import { createReport } from 'docx-templates';
+import { expose } from 'comlink';
 
 export const api = {
   createReport(options: Parameters<typeof createReport>[0]) {
