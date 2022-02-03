@@ -9,6 +9,7 @@ import { toDateFormat } from '@/composables/date';
 import { ref } from 'vue';
 import extendUserValid from '@api/admin/user/_id/extend.post';
 import deleteRechtAPI from '@api/admin/user/_id/rechte/_rechtid.delete';
+import addRechtAPI from '@api/admin/user/_id/rechte/add.post';
 
 const route = useRoute();
 
@@ -50,6 +51,23 @@ function deleteRecht(id: number) {
     }
   });
 }
+
+const addRechtName = ref('');
+const addRechtId = ref(0);
+const addRechtType = ref('');
+
+function addRecht() {
+  addRechtAPI({
+    params: {
+      id: route.params.id as string
+    },
+    body: {
+      id: addRechtId.value,
+      name: addRechtName.value,
+      recht: addRechtType.value
+    }
+  });
+}
 </script>
 <template lang="pug">
 v-container(fluid)
@@ -70,6 +88,16 @@ v-container(fluid)
           v-icon mdi-clock-check-outline
       p Gibst du kein Datum an wird automatisch auf 100 Tage von jetzt gesetzt. Bitte Format YYYY-MM-DD benutzen!
       v-text-field(label="Datum" v-model="valid_until_date")
+
+    FormDialog(title="Recht hinzufügen" @save="addRecht")
+      template(v-slot:activator="{ props }")
+        v-btn(icon v-bind="props")
+          v-icon mdi-plus
+      v-text-field(label="name" v-model="addRechtName")
+      v-text-field(label="id" type="number" v-model="addRechtId")
+      select(v-model="addRechtType")
+        option(value="leiter") Veranstaltungsleiter
+        option(value="fzVerantwortlicher") FZ-Verantwortlicher Ort
 
     v-btn(icon @click="deleteUser")
       v-icon mdi-delete

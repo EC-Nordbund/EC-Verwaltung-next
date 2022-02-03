@@ -37,7 +37,9 @@ v-dialog(fullscreen v-model="showDialog")
     v-app-bar(color="primary")
       v-app-bar-title {{ props.title }}
       v-spacer
+      slot(name="actionsPrepend")
       v-btn(@click="save") Speichern
+      slot(name="actionsAppend")
       v-btn(icon @click="showDialog = false")
         v-icon mdi-close
     //- Current workaround as v-toolbar currently doesn't exist!

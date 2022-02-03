@@ -40,6 +40,7 @@ export async function login(username: string, password: string) {
           name: string;
           valid_until: Date;
           is_admin: boolean;
+          is_super_admin: boolean;
         },
       ]
       | [];
@@ -54,21 +55,41 @@ export async function login(username: string, password: string) {
       throw new Error('Benutzername oder Passwort sind falsch!');
     }
 
-    const rechte: Rechte[] = (
-      (await con.query('SELECT * FROM user_rechte WHERE user_id = ?', [
-        data[0].user_id,
-      ])) as {
-        recht: string;
-        recht_object_id: number;
-        recht_object_name: string;
-      }[]
-    ).map(
-      (v) => ({
-        type: v.recht,
-        id: v.recht_object_id,
-        name: v.recht_object_name,
-      } as Rechte),
-    );
+    let rechte: Rechte[];
+
+    if (data[0].is_super_admin) {
+      rechte = (
+        (await con.query(
+          'SELECT DISTINCT recht, recht_object_id, recht_object_name FROM user_rechte',
+        )) as {
+          recht: string;
+          recht_object_id: number;
+          recht_object_name: string;
+        }[]
+      ).map(
+        (v) => ({
+          type: v.recht,
+          id: v.recht_object_id,
+          name: v.recht_object_name,
+        } as Rechte),
+      );
+    } else {
+      rechte = (
+        (await con.query('SELECT * FROM user_rechte WHERE user_id = ?', [
+          data[0].user_id,
+        ])) as {
+          recht: string;
+          recht_object_id: number;
+          recht_object_name: string;
+        }[]
+      ).map(
+        (v) => ({
+          type: v.recht,
+          id: v.recht_object_id,
+          name: v.recht_object_name,
+        } as Rechte),
+      );
+    }
 
     if (data[0].is_admin) {
       rechte.push('admin');

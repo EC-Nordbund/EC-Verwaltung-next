@@ -7,7 +7,8 @@ import pwdUpdate from '@api/auth/pwdchange.post';
 
 const build = __BUILD_ID__;
 
-const { status, currentToken, tokenList, userData } = useAuthData();
+const { status, currentToken, tokenList, userData, internal, timeUntilExpire } =
+  useAuthData();
 const tokenNames = computed(() => Object.keys(tokenList.value ?? {}));
 const singleUser = computed(() => tokenNames.value.length === 0);
 const username = useStorage('username', '');
@@ -84,14 +85,25 @@ v-app
   template(v-if="status === 2")
     v-navigation-drawer(app v-model="drawer")
       div
-        FormDialog(title="Passwort ändern" @save="changePwd")
-          template(v-slot:activator="{ props }")
-            v-btn(icon v-bind="props")
-              v-icon mdi-lock-reset
-          v-text-field(label="Altes Passwort" v-model="oldPWD")
-          v-text-field(label="Neues Passwort" v-model="newPWDA")
-          v-text-field(label="Neues Passwort" v-model="newPWDB")
+        
 
+      v-list
+        v-list-item(:title="userData.name" :subtitle="currentToken || ''")
+          template(#append)
+            v-list-item-avatar(right)
+              FormDialog(title="Benutzer Einstellungen" @save="changePwd")
+                template(#activator="{ props }")
+                  v-btn(icon v-bind="props" variant="text")
+                    v-icon mdi-menu-down
+                template(#actionsAppend)
+                  v-btn(icon @click="accountDialog = false;logoutHandler()")
+                    v-icon mdi-logout
+                  v-btn(icon @click="accountDialog = false; currentToken = null" v-if="!singleUser")
+                    v-icon mdi-account-convert
+                v-text-field(label="Aktuelles Passwort" v-model="oldPWD")
+                v-text-field(label="Neues Passwort" v-model="newPWDA")
+                v-text-field(label="Neues Passwort" v-model="newPWDB")
+      v-divider
       v-list(v-if="userData.rechte === 'admin'")
         v-list-subheader Personen
         v-list-item(to="/personen/liste")
@@ -164,21 +176,7 @@ v-app
       v-spacer
       v-app-bar-title EC-Nordbund Verwaltung
       v-spacer
-      span {{ currentToken }} - {{ userData.name }}
-      v-dialog(
-        v-model="accountDialog" 
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition")
-        template(v-slot:activator="{ props }")
-          v-btn(icon class="bg-primary" v-bind="props")
-            v-icon(color="white") mdi-account
-        v-card
-          v-card-actions
-            v-btn(icon flat color="primary" @click="accountDialog = false; logoutHandler()")
-              v-icon(color="white") mdi-logout
-            v-btn(icon flat color="primary" @click="accountDialog = false; currentToken = null" v-if="!singleUser")
-              v-icon(color="white") mdi-svg
+      
           // TODO: rewrite with toolbar!
           // v-app-bar(color="primary")
           //   v-btn(icon @click="accountDialog = false" color="primary")
@@ -200,7 +198,8 @@ v-app
           //       v-list-item-subtitle World
     v-main(style="min-height: calc(100vh - 40px)")
       // v-container(fluid style="height: 100%")
-      // | {{ userData }}
+      | {{ internal }}
+      | {{timeUntilExpire}}
       router-view(style="height: 100%; overflow: auto;")
     v-footer(app class="bg-primary")
       v-spacer

@@ -3,6 +3,9 @@ import { watch, ref, computed } from 'vue';
 import apiLogin from '@api/auth/login.post';
 import { createNewEventSource } from './sse';
 export { onInvalidate } from './sse';
+import { useNow } from '@vueuse/core';
+
+const now = useNow({ interval: 5000 });
 
 /**
  * Aktuell gewähltes AuthToken
@@ -16,9 +19,12 @@ export const authToken = computed(() =>
 /**
  * Aktuelle Nutzerdaten (mit simplen JWT-DATA parser)
  */
-const userData = computed(() =>
-  authToken.value ? JSON.parse(atob(authToken.value.split('.')[1])).user : null
+const userData = computed(() => (data.value ? data.value.user : null));
+
+const data = computed(() =>
+  authToken.value ? JSON.parse(atob(authToken.value.split('.')[1])) : null
 );
+
 /**
  * Liste der Tokens die ein Nutzer hat
  */
@@ -49,8 +55,26 @@ const status = computed(() => {
  * @returns Alles relevante zur authentifizierung
  */
 export function useAuthData() {
-  return { userData, status, tokenList, currentToken };
+  return {
+    userData,
+    status,
+    tokenList,
+    currentToken,
+    internal: data,
+    timeUntilExpire
+  };
 }
+
+const exp = computed(() => (data.value ? data.value.exp * 1000 : null));
+const timeUntilExpire = computed(() =>
+  exp.value ? exp.value - now.value.getTime() : null
+);
+watch(timeUntilExpire, () => {
+  if (typeof timeUntilExpire.value === 'number' && timeUntilExpire.value < 0) {
+    tokenList.value = null;
+    currentToken.value = null;
+  }
+});
 
 // Wenn das sich ändert sichern + neue eventsource (die lebt max 1 Stunde)
 watch([tokenList, currentToken], () => {
