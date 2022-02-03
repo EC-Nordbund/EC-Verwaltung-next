@@ -109,10 +109,11 @@ v-app
                   //- Current workaround as v-toolbar currently doesn't exist!
                   div(style="margin-top: 128px;")
                   v-card-text
-                    v-form(@submit.prevent="save" v-model="valid")
+                    v-form(@submit.prevent="changePwd")
                       v-text-field(label="Aktuelles Passwort" v-model="oldPWD")
                       v-text-field(label="Neues Passwort" v-model="newPWDA")
                       v-text-field(label="Neues Passwort" v-model="newPWDB")
+                    v-btn(@click="changePwd") Neues PWD setzen
       v-divider
       v-list(v-if="userData.rechte === 'admin'")
         v-list-subheader Personen
