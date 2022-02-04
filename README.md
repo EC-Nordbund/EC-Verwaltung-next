@@ -14,29 +14,36 @@
 
 ## Get started
 
- 1. ### Install
+1.  ### Install
+
     #### Dependencies
+
     ```
     pnpm i
     ```
+
     #### Generate API Routes
+
     ```
     pnpm a:routes
     ```
 
- 2. ### Configure
+2.  ### Configure
+
     copy the `.example.env` to `.env` and replace the variables.
 
-
- 3. ### Run
+3.  ### Run
 
     #### Verwaltung
+
     ```
     pnpm v:dev
     ```
+
     then open [http://localhost:3000/verwaltung/index.html](http://localhost:3000/verwaltung/index.html)
 
     #### API
+
     ```
     pnpm a:dev
     ```
@@ -44,9 +51,10 @@
 ### Pre Commit
 
 This should not throw any errors!
+
 ```
 pnpm fmt
-pnpm lint 
+pnpm lint
 ```
 
 ## Development
