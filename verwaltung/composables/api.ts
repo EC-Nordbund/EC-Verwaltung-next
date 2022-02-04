@@ -67,10 +67,14 @@ export function useAuthData() {
 
 const exp = computed(() => (data.value ? data.value.exp * 1000 : null));
 const timeUntilExpire = computed(() =>
-  exp.value ? exp.value - now.value.getTime() : null
+  exp.value ? exp.value - now.value.getTime() : -42
 );
 watch(timeUntilExpire, () => {
-  if (typeof timeUntilExpire.value === 'number' && timeUntilExpire.value < 0) {
+  if (
+    typeof timeUntilExpire.value === 'number' &&
+    timeUntilExpire.value < 0 &&
+    currentToken.value
+  ) {
     tokenList.value = null;
     currentToken.value = null;
   }

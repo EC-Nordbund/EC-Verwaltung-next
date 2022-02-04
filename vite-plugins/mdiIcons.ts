@@ -1,6 +1,6 @@
 import * as mdi from '@mdi/js';
 
-const mdi_keys = {};
+const mdi_keys: any = {};
 Object.keys(mdi)
   .filter(v => v !== 'default')
   .sort((a, b) => b.length - a.length)
