@@ -22,7 +22,7 @@ specifiers:
   vue-eslint-parser: 8.2.0
   vue-router: 4.0.12
   vue-tsc: 0.31.1
-  vuetify: npm:@vuetify/nightly@3.0.0-next-20220202.0
+  vuetify: npm:@vuetify/nightly@3.0.0-next-20220204.0
 
 dependencies:
   '@mdi/js': 6.5.95
@@ -30,7 +30,7 @@ dependencies:
   jose: 4.4.0
   vue: 3.2.29
   vue-router: 4.0.12_vue@3.2.29
-  vuetify: /@vuetify/nightly/3.0.0-next-20220202.0_vue@3.2.29
+  vuetify: /@vuetify/nightly/3.0.0-next-20220204.0_vue@3.2.29
 
 devDependencies:
   '@typescript-eslint/eslint-plugin': 5.10.2_2595c2126aec4d4b6e944b931dabb4c2
@@ -451,8 +451,8 @@ packages:
   /@vue/shared/3.2.29:
     resolution: {integrity: sha512-BjNpU8OK6Z0LVzGUppEk0CMYm/hKDnZfYdjSmPOs0N+TR1cLKJAkDwW8ASZUvaaSLEi6d3hVM7jnWnX+6yWnHw==}
 
-  /@vuetify/nightly/3.0.0-next-20220202.0_vue@3.2.29:
-    resolution: {integrity: sha512-bHl5QPCC+F5AN4bl/gcsDoMjRPZic+ecZLf0t3YORNI7eChHHCSTpILyihI26f8+lxgVPli+0U7QnrJaWQy3HA==}
+  /@vuetify/nightly/3.0.0-next-20220204.0_vue@3.2.29:
+    resolution: {integrity: sha512-NORYrpe0HBa3oteyaHEchvicnrwYeC2LZ3c+WLg3W55+3M/ChaayX7ju1MH67TiqE+AIdkvxe93hdjntddbR1g==}
     peerDependencies:
       '@formatjs/intl': ^1.0.0
       vue: ^3.2.19
