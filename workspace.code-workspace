@@ -67,7 +67,8 @@
 		"deno.unstable": true,
 		"deno.enable": false,
 		"deno.importMap": "../api/importmap.json",
-		"deno.internalDebug": true
+		"deno.internalDebug": true,
+		"terminal.integrated.cwd": ".."
 	},
 	"extensions": {
 		"unwantedRecommendations": [
