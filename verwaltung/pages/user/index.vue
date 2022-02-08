@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import loadUserList from '@api/admin/user.get';
 import { reactive, toRaw } from 'vue';
-import { onInvalidate } from '@/composables/api';
-import { required } from '@/rules/requires';
-import FormDialog from '@/components/FormDialog.vue';
+
+import { onInvalidate } from '@/composables/auth';
 import { useDataReload } from '@/composables/reloadableData';
-import addUser from '@api/admin/user/add.post';
+
+import { required } from '@/rules/requires';
+
+import FormDialog from '@/components/FormDialog.vue';
 import EcLoader from '@/components/EcLoader.vue';
+
+import addUser from '@api/admin/user/add.post';
+import loadUserList from '@api/admin/user.get';
 
 const {
   data: users,

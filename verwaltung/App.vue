@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAuthData } from '@/composables/api';
+import { useAuthData } from '@/composables/auth';
 import EcLogin from '@/components/EcLogin.vue';
 import EcChooseUser from '@/components/EcChooseUser.vue';
 import EcLayout from '@/components/EcLayout.vue';

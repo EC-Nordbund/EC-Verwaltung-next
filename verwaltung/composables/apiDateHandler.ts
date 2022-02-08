@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const dateRegex = /^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ$/;
 
-export function handleDate(obj: any) {
+export function handleDate(obj: unknown) {
   if (typeof obj === 'string' && obj.match(dateRegex)) return new Date(obj);
   if (typeof obj !== 'object') return obj;
 

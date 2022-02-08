@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAuthData } from '@/composables/api';
+import { useAuthData } from '@/composables/auth';
 import { computed } from 'vue';
 
 const { currentToken, tokenList } = useAuthData();
