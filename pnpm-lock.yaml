@@ -16,7 +16,7 @@ specifiers:
   unplugin-vue-components: 0.17.18
   vite: 2.8.1
   vite-plugin-inspect: 0.3.13
-  vite-plugin-pages: 0.20.1
+  vite-plugin-pages: 0.20.2
   vite-plugin-server: 0.1.2
   vue: 3.2.31
   vue-eslint-parser: 8.2.0
@@ -45,7 +45,7 @@ devDependencies:
   unplugin-vue-components: 0.17.18_vite@2.8.1+vue@3.2.31
   vite: 2.8.1_sass@1.49.7
   vite-plugin-inspect: 0.3.13_vite@2.8.1
-  vite-plugin-pages: 0.20.1_vite@2.8.1
+  vite-plugin-pages: 0.20.2_vite@2.8.1
   vite-plugin-server: 0.1.2_typescript@4.5.5
   vue-eslint-parser: 8.2.0_eslint@8.8.0
   vue-tsc: 0.31.3_typescript@4.5.5
@@ -2447,8 +2447,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-pages/0.20.1_vite@2.8.1:
-    resolution: {integrity: sha512-VHKE1/39HW4vqUcGLO6blq8MKqzP73kxYW9bykH1ihRfhgp7HLMCgTvmag6zDa66iKafzM3orzjVeIg4dUA+4A==}
+  /vite-plugin-pages/0.20.2_vite@2.8.1:
+    resolution: {integrity: sha512-A/N6Pez9sMzt7ZEfd1H7P9tmP6LrZwXMexV8xSiRahnUeNw+gz0W2dsPLJDZBvcixDZqoK8ggKdmyxgVBuTAfg==}
     peerDependencies:
       '@vue/compiler-sfc': '>=3'
       vite: '>=2'
