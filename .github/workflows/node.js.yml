@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: pnpm/action-setup@15569a497d6aff479ba1c47c859888e22a431052
+    - uses: pnpm/action-setup@2270f39ef63c3edf50be34da68c039eca5e15c15
       with:
         version: 6.27.1
     - name: Use Node.js ${{ matrix.node-version }}
