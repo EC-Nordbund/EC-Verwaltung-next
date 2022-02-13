@@ -34,5 +34,6 @@ rules:
     - error
     - ignores:
         - index
+  '@typescript-eslint/no-non-null-assertion': off
 globals:
   __BUILD_ID__: readonly

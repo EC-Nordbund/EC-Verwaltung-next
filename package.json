@@ -30,7 +30,8 @@
     "fmt:check": "pnpm v:fmt:check && pnpm a:fmt:check",
     "lint": "pnpm v:lint && pnpm a:lint",
     "lint:fix": "pnpm v:lint:fix && pnpm a:lint",
-    "types": "pnpm v:types"
+    "types": "pnpm v:types",
+    "up@v": "pnpm i vuetify@npm:@vuetify/nightly@next"
   },
   "license": "GPL3",
   "bugs": {

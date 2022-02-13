@@ -1,7 +1,9 @@
 import { onScopeDispose } from 'vue';
-import { authToken } from './api';
+import { useAuthData } from './authData';
 
 const invalidationCb: Record<string, (() => void)[]> = {};
+
+const { authToken } = useAuthData();
 
 export function onInvalidate(key: string[], cb: () => void) {
   if (currentSource?.readyState === 2) {

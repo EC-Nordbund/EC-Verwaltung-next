@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import FormDialog from '@/components/FormDialog.vue';
-import loadUser from '@api/admin/user/_id.get';
-import { onInvalidate } from '@/composables/api';
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
-import { useDataReload } from '@/composables/reloadableData';
-import EcLoader from '@/components/EcLoader.vue';
-import { toDateFormat } from '@/composables/date';
 import { ref } from 'vue';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+
+import { onInvalidate } from '@/composables/auth';
+import { useDataReload } from '@/composables/reloadableData';
+import { toDateFormat } from '@/composables/date';
+
+import FormDialog from '@/components/FormDialog.vue';
+import EcLoader from '@/components/EcLoader.vue';
 import extendUserValid from '@api/admin/user/_id/extend.post';
 import deleteRechtAPI from '@api/admin/user/_id/rechte/_rechtid.delete';
 import addRechtAPI from '@api/admin/user/_id/rechte/add.post';
+import loadUser from '@api/admin/user/_id.get';
 
 const route = useRoute();
 

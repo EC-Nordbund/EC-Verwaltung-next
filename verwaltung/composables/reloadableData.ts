@@ -1,4 +1,4 @@
-import { ref, onMounted, Ref, UnwrapRef } from 'vue';
+import { ref, onMounted, Ref, watchEffect } from 'vue';
 
 export function useDataReload<T>(cb: () => Promise<T>, init?: T) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +23,7 @@ export function useDataReload<T>(cb: () => Promise<T>, init?: T) {
     }
   }
 
-  onMounted(() => reload());
+  onMounted(() => watchEffect(() => reload()));
 
   return {
     data,
