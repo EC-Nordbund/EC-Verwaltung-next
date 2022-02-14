@@ -54,7 +54,7 @@
     "vite-plugin-pages": "0.20.2",
     "vite-plugin-server": "0.1.2",
     "vue-eslint-parser": "8.2.0",
-    "vue-tsc": "0.31.3"
+    "vue-tsc": "0.31.4"
   },
   "dependencies": {
     "@mdi/js": "6.5.95",
