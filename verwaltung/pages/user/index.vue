@@ -2,7 +2,6 @@
 import { reactive, toRaw, ref } from 'vue';
 
 import { useDataReload } from '@/composables/reloadableData';
-@/composables/reloadableData
 import { required } from '@/rules/requires';
 
 import FormDialog from '@/components/FormDialog.vue';

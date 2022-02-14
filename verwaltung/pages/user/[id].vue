@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 import { useDataReload } from '@/composables/reloadableData';
 import { toDateFormat } from '@/composables/date';
