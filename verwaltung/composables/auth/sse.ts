@@ -5,7 +5,11 @@ const invalidationCb: Record<string, (() => void)[]> = {};
 
 const { authToken } = useAuthData();
 
-export function onInvalidate(key: string[], cb: () => void) {
+export function onInvalidate(
+  key: string[],
+  cb: () => void,
+  signal?: AbortSignal
+) {
   if (currentSource?.readyState === 2) {
     createNewEventSource();
   }
@@ -18,10 +22,17 @@ export function onInvalidate(key: string[], cb: () => void) {
     }
   });
 
-  onScopeDispose(() => {
+  const cleanup = () => {
     key.forEach(k => {
       invalidationCb[k].splice(invalidationCb[k].indexOf(cb), 1);
     });
+  };
+
+  signal?.addEventListener('abort', cleanup);
+
+  onScopeDispose(() => {
+    cleanup();
+    signal?.removeEventListener('abort', cleanup);
   });
 }
 let currentSource: EventSource | null = null;

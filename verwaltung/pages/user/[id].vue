@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 
-import { onInvalidate } from '@/composables/auth';
 import { useDataReload } from '@/composables/reloadableData';
 import { toDateFormat } from '@/composables/date';
 
@@ -15,20 +14,13 @@ import loadUser from '@api/admin/user/_id.get';
 
 const route = useRoute();
 
-const {
-  data: user,
-  reload,
-  loading,
-  error,
-  nav
-} = useDataReload(() =>
-  loadUser({
-    params: { id: route.params.id as string }
-  })
-);
+const args = computed(() => ({
+  params: { id: route.params.id as string }
+}));
 
-onInvalidate([`user:${route.params.id}`], () => reload());
-onBeforeRouteUpdate(nav);
+const invalidations = computed(() => [`user:${route.params.id}`]);
+
+const reloadable = useDataReload(loadUser, args, { invalidations });
 
 const valid_until_date = ref<string>();
 function extend() {
@@ -73,16 +65,16 @@ function addRecht() {
 </script>
 <template lang="pug">
 v-container(fluid)
-  template(v-if="loading")
+  template(v-if="reloadable.loading")
     EcLoader(size="50px")
-  template(v-else-if="error")
-    p Ein fehler beim laden ist aufgetreten: {{error}}
-    v-btn(@click="reload") Nochmal versuchen
+  template(v-else-if="reloadable.error")
+    p Ein fehler beim laden ist aufgetreten: {{reloadable.error}}
+    v-btn(@click="reloadable.reload") Nochmal versuchen
   template(v-else)
-    h2 Benutzerverwaltung {{ user.user.username }} ({{ user.user.name }})
-    p Benutzer freigeschaltet bis: {{ toDateFormat(user.user.valid_until) }}
-    p Benutzer ist {{ user.user.is_admin ? '' : 'kein' }} Administrator
-    p E-Mail: {{user.user.email}}
+    h2 Benutzerverwaltung {{ reloadable.data.user.username }} ({{ reloadable.data.user.name }})
+    p Benutzer freigeschaltet bis: {{ toDateFormat(reloadable.data.user.valid_until) }}
+    p Benutzer ist {{ reloadable.data.user.is_admin ? '' : 'kein' }} Administrator
+    p E-Mail: {{reloadable.data.user.email}}
 
     FormDialog(title="Benutzer hinzufügen" @save="extend")
       template(v-slot:activator="{ props }")
@@ -106,7 +98,7 @@ v-container(fluid)
       
 
     v-list
-      v-list-item(v-for="recht in user.rechte" :key="recht.user_rechte_id" @click="")
+      v-list-item(v-for="recht in reloadable.data.rechte" :key="recht.user_rechte_id" @click="")
         v-list-item-title {{ recht.recht }} für {{ recht.recht_object_name }} (ID: {{ recht.recht_object_id }})
         template(v-slot:append)
           v-list-item-avatar(right)

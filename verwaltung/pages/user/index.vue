@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { reactive, toRaw } from 'vue';
+import { reactive, toRaw, ref } from 'vue';
 
-import { onInvalidate } from '@/composables/auth';
 import { useDataReload } from '@/composables/reloadableData';
-
+@/composables/reloadableData
 import { required } from '@/rules/requires';
 
 import FormDialog from '@/components/FormDialog.vue';
@@ -17,7 +16,9 @@ const {
   reload,
   loading,
   error
-} = useDataReload(() => loadUserList(), []);
+} = useDataReload(loadUserList, null, {
+  invalidations: ['user']
+});
 
 const newUserData = reactive({
   username: '',
@@ -31,8 +32,6 @@ function saveNewUser() {
     body: toRaw(newUserData)
   });
 }
-
-onInvalidate(['user'], reload);
 </script>
 <template lang="pug">
 v-container(fluid)
