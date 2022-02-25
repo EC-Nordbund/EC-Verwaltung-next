@@ -9,7 +9,7 @@ specifiers:
   eslint: 8.9.0
   eslint-config-prettier: 8.3.0
   eslint-plugin-vue: 8.4.1
-  jose: 4.5.0
+  jose: 4.5.1
   prettier: 2.5.1
   sass: 1.49.7
   typescript: 4.5.5
@@ -27,7 +27,7 @@ specifiers:
 dependencies:
   '@mdi/js': 6.5.95
   '@vueuse/core': 7.6.2_vue@3.2.31
-  jose: 4.5.0
+  jose: 4.5.1
   vue: 3.2.31
   vue-router: 4.0.12_vue@3.2.31
   vuetify: /@vuetify/nightly/3.0.0-next-20220214.0_vue@3.2.31
@@ -1651,8 +1651,8 @@ packages:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
     dev: true
 
-  /jose/4.5.0:
-    resolution: {integrity: sha512-GFcVFQwYQKbQTUOo2JlpFGXTkgBw26uzDsRMD2q1WgSKNSnpKS9Ug7bdQ8dS+p4sZHNH6iRPu6WK2jLIjspaMA==}
+  /jose/4.5.1:
+    resolution: {integrity: sha512-uhjuzZjKGKmi5DVJ/eghN8hJklLhwZRLRAaaG9MkkMAdfRYlHvZ10i4z/4WSN1hSTMffCet+k7iRHvbdGwmZPw==}
     dev: false
 
   /joycon/3.1.1:
