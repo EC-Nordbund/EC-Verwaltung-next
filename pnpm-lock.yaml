@@ -15,7 +15,7 @@ specifiers:
   typescript: 4.5.5
   unplugin-vue-components: 0.17.21
   vite: 2.8.2
-  vite-plugin-inspect: 0.3.15
+  vite-plugin-inspect: 0.4.1
   vite-plugin-pages: 0.20.2
   vite-plugin-server: 0.1.2
   vue: 3.2.31
@@ -44,7 +44,7 @@ devDependencies:
   typescript: 4.5.5
   unplugin-vue-components: 0.17.21_vite@2.8.2+vue@3.2.31
   vite: 2.8.2_sass@1.49.7
-  vite-plugin-inspect: 0.3.15_vite@2.8.2
+  vite-plugin-inspect: 0.4.1_vite@2.8.2
   vite-plugin-pages: 0.20.2_vite@2.8.2
   vite-plugin-server: 0.1.2_typescript@4.5.5
   vue-eslint-parser: 8.3.0_eslint@8.9.0
@@ -2350,8 +2350,8 @@ packages:
     hasBin: true
     dev: true
 
-  /ufo/0.7.10:
-    resolution: {integrity: sha512-YTnDRlE1cIofRqOFN8ioAbz9qenDvkgVMSn0cnxvIDjM9sfEOMKB0ybMr+otSlCXMfQ/X35haYRoI7Nua82RrA==}
+  /ufo/0.7.11:
+    resolution: {integrity: sha512-IT3q0lPvtkqQ8toHQN/BkOi4VIqoqheqM1FnkNWT9y0G8B3xJhwnoKBu5OHx8zHDOvveQzfKuFowJ0VSARiIDg==}
     dev: true
 
   /unbox-primitive/1.0.1:
@@ -2431,8 +2431,8 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vite-plugin-inspect/0.3.15_vite@2.8.2:
-    resolution: {integrity: sha512-WlAnh0L14jtQA3q6+6cbhU3+ZcOE5iOeNuyQqUAK/T3IKsv1PwDwpHUSWjpP25uBO0WTbw2zsY0R3Hpbtfw+AA==}
+  /vite-plugin-inspect/0.4.1_vite@2.8.2:
+    resolution: {integrity: sha512-rEfDRJwbsZjAxcsWJSlKkbiHkotoQFk63TykvCIc0vSq+fgcH4K1mi2cXI3U6Qyl7XooFYYwRit+t9QLvy008w==}
     engines: {node: '>=14'}
     peerDependencies:
       vite: ^2.0.0
@@ -2441,7 +2441,7 @@ packages:
       debug: 4.3.3
       kolorist: 1.5.1
       sirv: 2.0.2
-      ufo: 0.7.10
+      ufo: 0.7.11
       vite: 2.8.2_sass@1.49.7
     transitivePeerDependencies:
       - supports-color
