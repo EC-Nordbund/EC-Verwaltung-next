@@ -15,7 +15,7 @@ specifiers:
   typescript: 4.5.5
   unplugin-vue-components: 0.17.21
   vite: 2.8.2
-  vite-plugin-inspect: 0.4.1
+  vite-plugin-inspect: 0.4.3
   vite-plugin-pages: 0.20.2
   vite-plugin-server: 0.1.2
   vue: 3.2.31
@@ -44,7 +44,7 @@ devDependencies:
   typescript: 4.5.5
   unplugin-vue-components: 0.17.21_vite@2.8.2+vue@3.2.31
   vite: 2.8.2_sass@1.49.9
-  vite-plugin-inspect: 0.4.1_vite@2.8.2
+  vite-plugin-inspect: 0.4.3_vite@2.8.2
   vite-plugin-pages: 0.20.2_vite@2.8.2
   vite-plugin-server: 0.1.2_typescript@4.5.5
   vue-eslint-parser: 8.3.0_eslint@8.10.0
@@ -2431,8 +2431,8 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vite-plugin-inspect/0.4.1_vite@2.8.2:
-    resolution: {integrity: sha512-rEfDRJwbsZjAxcsWJSlKkbiHkotoQFk63TykvCIc0vSq+fgcH4K1mi2cXI3U6Qyl7XooFYYwRit+t9QLvy008w==}
+  /vite-plugin-inspect/0.4.3_vite@2.8.2:
+    resolution: {integrity: sha512-lj3oWnReRUwMHB7k8ZD8o6E27/OSn+8ua+tOftxuS39aM6Z9MG7m5r1CMlxMwEwdTM/wnQr0aH22Y2IX3e+++w==}
     engines: {node: '>=14'}
     peerDependencies:
       vite: ^2.0.0
