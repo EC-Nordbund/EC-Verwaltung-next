@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@mdi/js": "6.5.95",
-    "@vueuse/core": "7.6.2",
+    "@vueuse/core": "7.7.0",
     "jose": "4.5.1",
     "vue": "3.2.31",
     "vue-router": "4.0.12",
