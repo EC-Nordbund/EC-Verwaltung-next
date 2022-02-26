@@ -11,7 +11,7 @@ specifiers:
   eslint-plugin-vue: 8.5.0
   jose: 4.5.1
   prettier: 2.5.1
-  sass: 1.49.7
+  sass: 1.49.9
   typescript: 4.5.5
   unplugin-vue-components: 0.17.21
   vite: 2.8.2
@@ -40,10 +40,10 @@ devDependencies:
   eslint-config-prettier: 8.4.0_eslint@8.10.0
   eslint-plugin-vue: 8.5.0_eslint@8.10.0
   prettier: 2.5.1
-  sass: 1.49.7
+  sass: 1.49.9
   typescript: 4.5.5
   unplugin-vue-components: 0.17.21_vite@2.8.2+vue@3.2.31
-  vite: 2.8.2_sass@1.49.7
+  vite: 2.8.2_sass@1.49.9
   vite-plugin-inspect: 0.4.1_vite@2.8.2
   vite-plugin-pages: 0.20.2_vite@2.8.2
   vite-plugin-server: 0.1.2_typescript@4.5.5
@@ -302,7 +302,7 @@ packages:
       vite: ^2.5.10
       vue: ^3.2.25
     dependencies:
-      vite: 2.8.2_sass@1.49.7
+      vite: 2.8.2_sass@1.49.9
       vue: 3.2.31
     dev: true
 
@@ -2114,8 +2114,8 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /sass/1.49.7:
-    resolution: {integrity: sha512-13dml55EMIR2rS4d/RDHHP0sXMY3+30e1TKsyXaSz3iLWVoDWEoboY8WzJd5JMnxrRHffKO3wq2mpJ0jxRJiEQ==}
+  /sass/1.49.9:
+    resolution: {integrity: sha512-YlYWkkHP9fbwaFRZQRXgDi3mXZShslVmmo+FVK3kHLUELHHEYrCmL1x6IUjC7wLS6VuJSAFXRQS/DxdsC4xL1A==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -2412,7 +2412,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      vite: 2.8.2_sass@1.49.7
+      vite: 2.8.2_sass@1.49.9
       webpack-virtual-modules: 0.4.3
     dev: true
 
@@ -2442,7 +2442,7 @@ packages:
       kolorist: 1.5.1
       sirv: 2.0.2
       ufo: 0.7.11
-      vite: 2.8.2_sass@1.49.7
+      vite: 2.8.2_sass@1.49.9
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2461,7 +2461,7 @@ packages:
       fast-glob: 3.2.11
       json5: 2.2.0
       local-pkg: 0.4.1
-      vite: 2.8.2_sass@1.49.7
+      vite: 2.8.2_sass@1.49.9
       yaml: 2.0.0-10
     transitivePeerDependencies:
       - supports-color
@@ -2481,7 +2481,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /vite/2.8.2_sass@1.49.7:
+  /vite/2.8.2_sass@1.49.9:
     resolution: {integrity: sha512-zawfykcPVPYva4KusIWORNLr324Qx86/3NpfQSIOJdjnL5pYhwDoImLYMOh4lFLcP/7//tNuWM2vx2F5OSVC9w==}
     engines: {node: '>=12.2.0'}
     hasBin: true
@@ -2501,7 +2501,7 @@ packages:
       postcss: 8.4.6
       resolve: 1.22.0
       rollup: 2.67.0
-      sass: 1.49.7
+      sass: 1.49.9
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
