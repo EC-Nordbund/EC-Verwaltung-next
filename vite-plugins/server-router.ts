@@ -29,7 +29,7 @@ export default () => {
         import { wrapFetchOptions } from '@/composables/api'
         import { handleDate } from '@/composables/apiDateHandler'
 
-        export default async ({ params, query, body } = {}) => {
+        export default async ({ params, query, body, signal } = {}) => {
           const url = new URL(\`${pathLit}\`, __API_BASE_URL__)
 
           if(query) {
@@ -39,6 +39,7 @@ export default () => {
 
           const res = await fetch(url.href, wrapFetchOptions({
             method: '${METHOD}',
+            signal,
             ${
               METHOD !== 'get'
                 ? `headers: {
