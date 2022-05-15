@@ -4,7 +4,7 @@ specifiers:
   '@mdi/js': 6.5.95
   '@typescript-eslint/eslint-plugin': 5.12.1
   '@typescript-eslint/parser': 5.12.1
-  '@vitejs/plugin-vue': 2.2.2
+  '@vitejs/plugin-vue': 2.3.3
   '@vueuse/core': 7.7.0
   eslint: 8.10.0
   eslint-config-prettier: 8.4.0
@@ -35,7 +35,7 @@ dependencies:
 devDependencies:
   '@typescript-eslint/eslint-plugin': 5.12.1_27a0c788acac7d65514027b167e3b3f6
   '@typescript-eslint/parser': 5.12.1_eslint@8.10.0+typescript@4.5.5
-  '@vitejs/plugin-vue': 2.2.2_vite@2.8.4+vue@3.2.31
+  '@vitejs/plugin-vue': 2.3.3_vite@2.8.4+vue@3.2.31
   eslint: 8.10.0
   eslint-config-prettier: 8.4.0_eslint@8.10.0
   eslint-plugin-vue: 8.5.0_eslint@8.10.0
@@ -61,12 +61,13 @@ packages:
   /@babel/helper-validator-identifier/7.16.7:
     resolution: {integrity: sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==}
     engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/parser/7.17.0:
     resolution: {integrity: sha512-VKXSCQx5D8S04ej+Dqsr1CzYvvWgf20jIw2D+YhQCrIlr2UZGaDds23Y0xg75/skOxpLCRpUZvk/1EAVkGoDOw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.17.0
 
   /@babel/types/7.17.0:
     resolution: {integrity: sha512-TmKSNO4D5rzhL5bjWFcVHHLETzfQ/AmbKpKPOSjlP0WoHZ6L911fgoOKY4Alp/emzG4cHJdyN49zpgkbXFEHHw==}
@@ -74,7 +75,6 @@ packages:
     dependencies:
       '@babel/helper-validator-identifier': 7.16.7
       to-fast-properties: 2.0.0
-    dev: true
 
   /@emmetio/abbreviation/2.2.2:
     resolution: {integrity: sha512-TtE/dBnkTCct8+LntkqVrwqQao6EnPAs1YN3cUgxOxTaBlesBCY37ROUAVZrRlG64GNnVShdl/b70RfAI3w5lw==}
@@ -295,8 +295,8 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/2.2.2_vite@2.8.4+vue@3.2.31:
-    resolution: {integrity: sha512-3C0s45VOwIFEDU+2ownJOpb0zD5fnjXWaHVOLID2R1mYOlAx3doNBFnNbVjaZvpke/L7IdPJXjpyYpXZToDKig==}
+  /@vitejs/plugin-vue/2.3.3_vite@2.8.4+vue@3.2.31:
+    resolution: {integrity: sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       vite: ^2.5.10
@@ -2262,7 +2262,6 @@ packages:
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=}
     engines: {node: '>=4'}
-    dev: true
 
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
