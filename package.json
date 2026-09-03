@@ -42,7 +42,7 @@
     "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.12.1",
     "@vitejs/plugin-vue": "2.2.2",
-    "eslint": "8.10.0",
+    "eslint": "8.57.1",
     "eslint-config-prettier": "8.4.0",
     "eslint-plugin-vue": "8.5.0",
     "prettier": "2.5.1",
